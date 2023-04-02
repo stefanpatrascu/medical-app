@@ -1,0 +1,32 @@
+version: '3'
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: mssql-medical-app-container
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: MyStrongP@ssw0rd
+      MSSQL_TCP_PORT: 1433
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./sql:/sql
+    command: >
+      bash -c "(/opt/mssql/bin/sqlservr &)
+               until /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $$SA_PASSWORD -Q 'SELECT 1'; do sleep 1; done
+               /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $$SA_PASSWORD -i /sql/init.sql
+               while true; do sleep 1d; done"
+
+  backend:
+    build: ./backend
+    container_name: java-backend-container
+    depends_on:
+     - db
+    ports:
+      - "8089:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:sqlserver://db:1433;databaseName=medicalApp;encrypt=false;
+      - SPRING_DATASOURCE_USERNAME=sa
+      - SPRING_DATASOURCE_PASSWORD=MyStrongP@ssw0rd
+    volumes:
+      - ./backend/src/main/resources/application.properties:/app/application.properties
