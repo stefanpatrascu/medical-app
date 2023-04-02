@@ -31,3 +31,6 @@ jobs:
 
       - name: Create Backend Image
         run: docker-compose up -d --force-recreate backend
+
+      - name: Create Frontend Image
+        run: docker-compose up -d --force-recreate frontend

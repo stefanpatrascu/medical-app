@@ -19,7 +19,7 @@ services:
 
   backend:
     build: ./backend
-    container_name: java-backend-container
+    container_name: java-medical-app-container
     depends_on:
      - db
     ports:
@@ -30,3 +30,16 @@ services:
       - SPRING_DATASOURCE_PASSWORD=MyStrongP@ssw0rd
     volumes:
       - ./backend/src/main/resources/application.properties:/app/application.properties
+
+  frontend:
+    build: ./frontend
+    container_name: angular-frontend-container
+    depends_on:
+      - backend
+    ports:
+      - "4209:4209"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: >
+      bash -c "npm install && ng serve --host 0.0.0.0 --port 4209 --disable-host-check --proxy-config proxy.conf.json"
