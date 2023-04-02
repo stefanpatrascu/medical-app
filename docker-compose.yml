@@ -19,7 +19,7 @@ services:
 
   backend:
     build: ./backend
-    container_name: java-medical-app-container
+    container_name: backend-medical-app-container
     depends_on:
      - db
     ports:
@@ -33,7 +33,7 @@ services:
 
   frontend:
     build: ./frontend
-    container_name: angular-frontend-container
+    container_name: frontend-medical-app-container
     depends_on:
       - backend
     ports:
