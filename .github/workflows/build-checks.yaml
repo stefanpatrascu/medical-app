@@ -1,4 +1,4 @@
-name: Combined Build Checks
+name: Build Checks
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - '*'
   pull_request:
     branches:
-      - '*'
+      - [main, develop]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
