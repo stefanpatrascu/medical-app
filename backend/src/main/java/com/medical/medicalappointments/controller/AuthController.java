@@ -1,5 +1,5 @@
 package com.medical.medicalappointments.controller;
-import com.medical.medicalappointments.config.JwtConfig;
+import com.medical.medicalappointments.security.config.JwtConfig;
 import com.medical.medicalappointments.model.dto.LoginRequestDTO;
 import com.medical.medicalappointments.service.CustomUserDetailsService;
 import com.medical.medicalappointments.service.JwtService;

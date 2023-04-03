@@ -1,10 +1,9 @@
-package com.medical.medicalappointments.component;
+package com.medical.medicalappointments.security;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
-import com.medical.medicalappointments.annotations.AccessToken;
-import com.medical.medicalappointments.config.JwtConfig;
+import com.medical.medicalappointments.security.config.JwtConfig;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;

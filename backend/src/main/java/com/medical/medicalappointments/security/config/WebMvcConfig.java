@@ -1,6 +1,6 @@
-package com.medical.medicalappointments.config;
+package com.medical.medicalappointments.security.config;
 
-import com.medical.medicalappointments.component.AccessTokenAnnotation;
+import com.medical.medicalappointments.security.AccessTokenAnnotation;
 import com.medical.medicalappointments.component.RoleInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

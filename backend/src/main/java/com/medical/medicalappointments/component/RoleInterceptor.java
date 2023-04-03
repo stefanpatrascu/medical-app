@@ -1,7 +1,7 @@
 package com.medical.medicalappointments.component;
 
-import com.medical.medicalappointments.annotations.RoleRequired;
-import com.medical.medicalappointments.config.JwtConfig;
+import com.medical.medicalappointments.security.RoleRequired;
+import com.medical.medicalappointments.security.config.JwtConfig;
 import com.medical.medicalappointments.model.enums.Role;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

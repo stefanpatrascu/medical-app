@@ -1,7 +1,7 @@
 package com.medical.medicalappointments.controller;
 
-import com.medical.medicalappointments.annotations.AccessToken;
-import com.medical.medicalappointments.annotations.RoleRequired;
+import com.medical.medicalappointments.security.AccessToken;
+import com.medical.medicalappointments.security.RoleRequired;
 import com.medical.medicalappointments.model.entity.User;
 import com.medical.medicalappointments.model.enums.Role;
 import com.medical.medicalappointments.service.CustomUserDetailsService;

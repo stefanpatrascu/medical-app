@@ -1,4 +1,4 @@
-package com.medical.medicalappointments.config;
+package com.medical.medicalappointments.security.config;
 
 import com.medical.medicalappointments.component.RoleInterceptor;
 import com.medical.medicalappointments.service.CustomUserDetailsService;

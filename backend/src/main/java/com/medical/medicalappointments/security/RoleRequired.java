@@ -1,4 +1,4 @@
-package com.medical.medicalappointments.annotations;
+package com.medical.medicalappointments.security;
 import com.medical.medicalappointments.model.enums.Role;
 
 import java.lang.annotation.ElementType;

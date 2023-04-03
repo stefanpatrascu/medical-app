@@ -1,5 +1,5 @@
 package com.medical.medicalappointments.service;
-import com.medical.medicalappointments.config.JwtConfig;
+import com.medical.medicalappointments.security.config.JwtConfig;
 import com.medical.medicalappointments.model.entity.User;
 import com.medical.medicalappointments.model.repository.UserRepository;
 import io.jsonwebtoken.Claims;
