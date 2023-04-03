@@ -16,7 +16,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 @Component
-public class AccessTokenHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
+public class AccessTokenAnnotation implements HandlerMethodArgumentResolver {
 
     @Autowired
     private JwtConfig jwtConfig;

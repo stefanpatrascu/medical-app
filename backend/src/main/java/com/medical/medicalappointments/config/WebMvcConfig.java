@@ -1,6 +1,6 @@
 package com.medical.medicalappointments.config;
 
-import com.medical.medicalappointments.component.AccessTokenHandlerMethodArgumentResolver;
+import com.medical.medicalappointments.component.AccessTokenAnnotation;
 import com.medical.medicalappointments.component.RoleInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     private RoleInterceptor roleInterceptor;
 
     @Autowired
-    private AccessTokenHandlerMethodArgumentResolver accessTokenHandlerMethodArgumentResolver;
+    private AccessTokenAnnotation accessTokenHandlerMethodArgumentResolver;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
