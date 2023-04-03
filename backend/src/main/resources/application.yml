@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:sqlserver://localhost:1433;databaseName=medicalApp;encrypt=false;
+    url: jdbc:sqlserver://localhost:14333;databaseName=medicalApp;encrypt=false;
     username: sa
     password: MyStrongP@ssw0rd
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
