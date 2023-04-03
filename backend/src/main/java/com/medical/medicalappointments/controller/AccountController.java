@@ -26,14 +26,13 @@ public class AccountController {
     private AccountService accountService;
 
     @PostMapping("/logout")
-    @RoleRequired({Role.ADMIN, Role.PATIENT, Role.DOCTOR})
     public ResponseEntity<?> logout(HttpServletResponse response) {
         accountService.logout(response);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/my-account")
-    @RoleRequired({Role.ADMIN, Role.PATIENT, Role.DOCTOR})
+//    @RoleRequired({Role.ADMIN, Role.PATIENT, Role.DOCTOR})
     public ResponseEntity<User> currentUser(@AccessToken Claims claims) {
         User user = accountService.getCurrentUser(claims.get("email").toString());
         return new ResponseEntity<>(user, HttpStatus.OK);

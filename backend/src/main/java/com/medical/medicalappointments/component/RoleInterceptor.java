@@ -56,14 +56,17 @@ public class RoleInterceptor implements HandlerInterceptor {
                     String roleName = claims.get("role", String.class);
                     Role currentUserRole = Role.valueOf(roleName);
 
-                    // Check if the user has any of the required roles
-                    for (Role role : requiredRoles) {
-                        if (currentUserRole == role) {
-                            return true;
+                    if (requiredRoles.length == 0) {
+                        return true;
+                    } else {
+                        for (Role role : requiredRoles) {
+                            if (currentUserRole == role) {
+                                return true;
+                            }
                         }
+                        response.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have the required role to access this resource.");
+                        return false;
                     }
-                    response.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have the required role to access this resource.");
-                    return false;
 
                 } catch (JwtException e) {
                     // Log the error and return a 401 response
