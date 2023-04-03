@@ -43,9 +43,9 @@ public class AuthService {
 
             addJwtCookieToResponse(response, jwtToken);
 
-            return ResponseEntity.ok("Login successful");
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (AuthenticationException ex) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 
