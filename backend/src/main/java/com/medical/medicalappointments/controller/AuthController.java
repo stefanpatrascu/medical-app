@@ -1,8 +1,6 @@
 package com.medical.medicalappointments.controller;
-import com.medical.medicalappointments.annotations.RoleRequired;
 import com.medical.medicalappointments.config.JwtConfig;
 import com.medical.medicalappointments.model.dto.LoginRequestDTO;
-import com.medical.medicalappointments.model.enums.Role;
 import com.medical.medicalappointments.service.CustomUserDetailsService;
 import com.medical.medicalappointments.service.JwtService;
 import jakarta.validation.Valid;
@@ -18,7 +16,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
 
     @Autowired
@@ -32,12 +30,6 @@ public class AuthController {
 
     @Autowired
     private JwtConfig jwtConfig;
-
-    @GetMapping("/test-api")
-    @RoleRequired({Role.ADMIN, Role.PATIENT})
-    public ResponseEntity<String> test() {
-        return new ResponseEntity<>("Test", HttpStatus.OK);
-    }
 
     @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletResponse response) {
@@ -66,7 +58,6 @@ public class AuthController {
         // Create HttpOnly cookie
         Cookie jwtCookie = new Cookie("JWT-TOKEN", jwtToken);
         jwtCookie.setHttpOnly(true);
-        jwtCookie.setSecure(true);
         jwtCookie.setPath("/"); // Set the path for the cookie
         jwtCookie.setMaxAge((int) jwtConfig.getExpirationTime() / 1000); // Set the cookie's max age to the same as the token's
 

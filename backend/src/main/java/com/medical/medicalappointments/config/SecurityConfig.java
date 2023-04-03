@@ -1,5 +1,6 @@
 package com.medical.medicalappointments.config;
 
+import com.medical.medicalappointments.component.RoleInterceptor;
 import com.medical.medicalappointments.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private RoleInterceptor roleInterceptor;
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
@@ -41,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
             .authorizeRequests()
-            .antMatchers("/auth/**").permitAll()
+            .antMatchers("/api/**").permitAll()
             .anyRequest().authenticated()
             .and()
             .formLogin().disable()

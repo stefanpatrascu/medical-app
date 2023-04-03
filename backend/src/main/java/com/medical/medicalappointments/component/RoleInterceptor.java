@@ -1,4 +1,4 @@
-package com.medical.medicalappointments.security;
+package com.medical.medicalappointments.component;
 
 import com.medical.medicalappointments.annotations.RoleRequired;
 import com.medical.medicalappointments.config.JwtConfig;

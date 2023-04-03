@@ -1,4 +1,6 @@
 package com.medical.medicalappointments.model.entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.medical.medicalappointments.model.enums.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +25,7 @@ public class User {
     private String lastName;
 
     @NotNull
+    @JsonIgnore
     private String password;
 
     @NotNull
@@ -34,6 +37,7 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_info_id")
+    @JsonManagedReference
     private UserInfo userInfo;
 
     public void setId(Long id) {
