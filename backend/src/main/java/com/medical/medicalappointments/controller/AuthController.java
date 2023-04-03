@@ -1,5 +1,7 @@
 package com.medical.medicalappointments.controller;
+import com.medical.medicalappointments.annotations.RoleRequired;
 import com.medical.medicalappointments.model.dto.LoginRequestDTO;
+import com.medical.medicalappointments.model.enums.Role;
 import com.medical.medicalappointments.service.CustomUserDetailsService;
 import com.medical.medicalappointments.service.JwtService;
 import jakarta.validation.Valid;
@@ -10,10 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -27,6 +26,12 @@ public class AuthController {
 
     @Autowired
     private JwtService jwtService;
+
+    @GetMapping("/test-api")
+    @RoleRequired({Role.ADMIN, Role.PATIENT})
+    public ResponseEntity<String> test() {
+        return new ResponseEntity<>("Test", HttpStatus.OK);
+    }
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@Valid @RequestBody LoginRequestDTO loginRequest) {
