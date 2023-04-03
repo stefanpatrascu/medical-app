@@ -1,17 +1,26 @@
 package com.medical.medicalappointments.security;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.JWTVerifier;
 import com.medical.medicalappointments.annotations.RoleRequired;
+import com.medical.medicalappointments.config.JwtConfig;
 import com.medical.medicalappointments.model.enums.Role;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.interfaces.DecodedJWT;
 
 @Component
 public class RoleInterceptor implements HandlerInterceptor {
+
+    @Autowired
+    private JwtConfig jwtConfig;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -30,22 +39,33 @@ public class RoleInterceptor implements HandlerInterceptor {
                 }
                 token = token.substring(7);
 
-                // Decode the JWT token and get the user role
-                DecodedJWT decodedJWT = JWT.decode(token);
-                String roleName = decodedJWT.getClaim("role").asString();
-                Role currentUserRole = Role.valueOf(roleName);
+                // Verify the JWT signature with the secret key
+                try {
+                    Claims claims = Jwts.parser()
+                        .setSigningKey(jwtConfig.getSecret())
+                        .parseClaimsJws(token)
+                        .getBody();
 
-                // Check if the user has any of the required roles
-                for (Role role : requiredRoles) {
-                    if (currentUserRole == role) {
-                        return true;
+                    String roleName = claims.get("role", String.class);
+                    Role currentUserRole = Role.valueOf(roleName);
+
+                    // Check if the user has any of the required roles
+                    for (Role role : requiredRoles) {
+                        if (currentUserRole == role) {
+                            return true;
+                        }
                     }
+                    response.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have the required role to access this resource.");
+                    return false;
+
+                } catch (JwtException e) {
+                    // Log the error and return a 401 response
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid JWT token.");
+                    return false;
                 }
-                response.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have the required role to access this resource.");
-                return false;
             }
         }
-
         return true;
     }
+
 }
