@@ -1,13 +1,11 @@
 package com.medical.medicalappointments.security;
 
-import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.interfaces.JWTVerifier;
 import com.medical.medicalappointments.annotations.RoleRequired;
 import com.medical.medicalappointments.config.JwtConfig;
 import com.medical.medicalappointments.model.enums.Role;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -31,13 +29,22 @@ public class RoleInterceptor implements HandlerInterceptor {
             if (roleRequired != null) {
                 Role[] requiredRoles = roleRequired.value();
 
-                // Get the JWT token from the request header
-                String token = request.getHeader("Authorization");
-                if (token == null || !token.startsWith("Bearer ")) {
-                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Missing or invalid authorization header.");
+                // Get the JWT token from the cookies
+                String token = null;
+                Cookie[] cookies = request.getCookies();
+                if (cookies != null) {
+                    for (Cookie cookie : cookies) {
+                        if ("JWT-TOKEN".equals(cookie.getName())) {
+                            token = cookie.getValue();
+                            break;
+                        }
+                    }
+                }
+
+                if (token == null) {
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Missing or invalid authorization cookie.");
                     return false;
                 }
-                token = token.substring(7);
 
                 // Verify the JWT signature with the secret key
                 try {
