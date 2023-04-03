@@ -29,6 +29,7 @@ public class User {
     private String password;
 
     @NotNull
+    @Column(unique = true)
     private String email;
 
     @Enumerated(EnumType.STRING)
