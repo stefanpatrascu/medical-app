@@ -4,6 +4,7 @@ import com.medical.medicalappointments.security.AccessToken;
 import com.medical.medicalappointments.security.RoleRequired;
 import com.medical.medicalappointments.model.entity.User;
 import com.medical.medicalappointments.model.enums.Role;
+import com.medical.medicalappointments.service.AccountService;
 import com.medical.medicalappointments.service.CustomUserDetailsService;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,27 +23,20 @@ import javax.servlet.http.HttpServletResponse;
 public class AccountController {
 
     @Autowired
-    private CustomUserDetailsService customUserDetailsService;
-
+    private AccountService accountService;
 
     @PostMapping("/logout")
     @RoleRequired({Role.ADMIN, Role.PATIENT, Role.DOCTOR})
     public ResponseEntity<?> logout(HttpServletResponse response) {
-        Cookie logoutCookie = new Cookie("JWT-TOKEN", null);
-        logoutCookie.setHttpOnly(true);
-        logoutCookie.setSecure(true);
-        logoutCookie.setPath("/");
-        logoutCookie.setMaxAge(0); // Set the cookie to expire immediately
-
-        response.addCookie(logoutCookie);
+        accountService.logout(response);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/my-account")
     @RoleRequired({Role.ADMIN, Role.PATIENT, Role.DOCTOR})
     public ResponseEntity<User> currentUser(@AccessToken Claims claims) {
-        final User user = customUserDetailsService.getUserDetails(claims.get("email").toString());
-
+        User user = accountService.getCurrentUser(claims.get("email").toString());
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }
+
