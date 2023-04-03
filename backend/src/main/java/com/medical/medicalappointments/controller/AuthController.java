@@ -5,18 +5,18 @@ import com.medical.medicalappointments.service.CustomUserDetailsService;
 import com.medical.medicalappointments.service.JwtService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 public class AuthController {
 
     @Autowired
@@ -31,18 +31,6 @@ public class AuthController {
     @Autowired
     private JwtConfig jwtConfig;
 
-    @PostMapping("/logout")
-    public ResponseEntity<?> logout(HttpServletResponse response) {
-        Cookie logoutCookie = new Cookie("JWT-TOKEN", null);
-        logoutCookie.setHttpOnly(true);
-        logoutCookie.setSecure(true);
-        logoutCookie.setPath("/");
-        logoutCookie.setMaxAge(0); // Set the cookie to expire immediately
-
-        response.addCookie(logoutCookie);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
     @PostMapping("/login")
     public ResponseEntity<String> login(@Valid @RequestBody LoginRequestDTO loginRequest, HttpServletResponse response) {
         Authentication authentication = authenticationManager.authenticate(
@@ -51,6 +39,8 @@ public class AuthController {
                 loginRequest.getPassword()
             )
         );
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(loginRequest.getEmail());
         String jwtToken = jwtService.generateToken(userDetails.getUsername());
