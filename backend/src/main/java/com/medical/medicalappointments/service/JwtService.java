@@ -43,7 +43,7 @@ public class JwtService {
             .compact();
     }
 
-    public Claims getClaims(String token) {
+    public Claims validateClaims(String token) {
         return Jwts.parser()
             .setSigningKey(jwtConfig.getSecret())
             .parseClaimsJws(token)

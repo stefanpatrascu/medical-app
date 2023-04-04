@@ -3,9 +3,7 @@ package com.medical.medicalappointments.security;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
-import com.medical.medicalappointments.security.config.JwtConfig;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
+import com.medical.medicalappointments.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -16,9 +14,8 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 @Component
 public class AccessTokenAnnotation implements HandlerMethodArgumentResolver {
-
     @Autowired
-    private JwtConfig jwtConfig;
+    private JwtService jwtService;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -49,13 +46,7 @@ public class AccessTokenAnnotation implements HandlerMethodArgumentResolver {
             return null;
         }
 
-        // Parse the access token to get the Claims
-        Claims claims = Jwts.parser()
-            .setSigningKey(jwtConfig.getSecret())
-            .parseClaimsJws(accessToken)
-            .getBody();
-
-        return claims;
+        return jwtService.validateClaims(accessToken);
     }
 
 }
