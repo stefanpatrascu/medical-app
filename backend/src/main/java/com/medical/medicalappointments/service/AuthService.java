@@ -11,9 +11,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Service
@@ -27,6 +32,9 @@ public class AuthService {
 
     @Autowired
     private JwtConfig jwtConfig;
+
+    @Autowired
+    private CsrfTokenRepository csrfTokenRepository;
 
     public ResponseEntity<String> login(@Valid LoginRequestDTO loginRequest, HttpServletResponse response) {
         try {
@@ -42,11 +50,22 @@ public class AuthService {
             String jwtToken = jwtService.generateToken(authentication.getName());
 
             addJwtCookieToResponse(response, jwtToken);
+            addXsrfCookieToResponse(response);
 
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (AuthenticationException ex) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+    }
+
+    private void addXsrfCookieToResponse(HttpServletResponse response) {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        CsrfToken csrfToken = csrfTokenRepository.generateToken(request);
+        csrfTokenRepository.saveToken(csrfToken, request, response);
+
+        Cookie csrfCookie = new Cookie("XSRF-TOKEN", csrfToken.getToken());
+        csrfCookie.setPath("/");
+        response.addCookie(csrfCookie);
     }
 
     private void addJwtCookieToResponse(HttpServletResponse response, String jwtToken) {

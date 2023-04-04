@@ -2,6 +2,7 @@ package com.medical.medicalappointments.service;
 
 import com.medical.medicalappointments.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
@@ -21,6 +22,8 @@ public class AccountService {
         logoutCookie.setMaxAge(0); // Set the cookie to expire immediately
 
         response.addCookie(logoutCookie);
+
+        SecurityContextHolder.getContext().setAuthentication(null);
     }
 
     public User getCurrentUser(String email) {
