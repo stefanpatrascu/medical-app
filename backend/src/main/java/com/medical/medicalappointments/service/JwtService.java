@@ -14,8 +14,6 @@ import java.util.Date;
 public class JwtService {
 
     @Autowired
-    private CustomUserDetailsService customUserDetailsService;
-    @Autowired
     private JwtConfig jwtConfig;
 
     @Autowired
@@ -23,10 +21,10 @@ public class JwtService {
 
     public String generateToken(String email) {
 
-        User userDetails = userRepository.findByEmail(email)
+        final User userDetails = userRepository.findByEmail(email)
             .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
 
-        Claims claims = Jwts.claims();
+        final Claims claims = Jwts.claims();
         claims.put("email", email);
         claims.put("id", userDetails.getId());
         claims.put("role", userDetails.getRole().toString());

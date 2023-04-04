@@ -30,7 +30,7 @@ public class AccountController {
     @GetMapping("/my-account")
 //    @RoleRequired({Role.ADMIN, Role.PATIENT, Role.DOCTOR})
     public ResponseEntity<User> currentUser(@AccessToken Claims claims) {
-        User user = accountService.getCurrentUser(claims.get("email").toString());
+        final User user = accountService.getCurrentUser(claims.get("email").toString());
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }

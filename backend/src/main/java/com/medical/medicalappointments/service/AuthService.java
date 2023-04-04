@@ -47,7 +47,7 @@ public class AuthService {
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            String jwtToken = jwtService.generateToken(authentication.getName());
+            final String jwtToken = jwtService.generateToken(authentication.getName());
 
             addJwtCookieToResponse(response, jwtToken);
             addXsrfCookieToResponse(response);
@@ -59,17 +59,17 @@ public class AuthService {
     }
 
     private void addXsrfCookieToResponse(HttpServletResponse response) {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        final HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         CsrfToken csrfToken = csrfTokenRepository.generateToken(request);
         csrfTokenRepository.saveToken(csrfToken, request, response);
 
-        Cookie csrfCookie = new Cookie("XSRF-TOKEN", csrfToken.getToken());
+        final Cookie csrfCookie = new Cookie("XSRF-TOKEN", csrfToken.getToken());
         csrfCookie.setPath("/");
         response.addCookie(csrfCookie);
     }
 
     private void addJwtCookieToResponse(HttpServletResponse response, String jwtToken) {
-        Cookie jwtCookie = new Cookie("JWT-TOKEN", jwtToken);
+        final Cookie jwtCookie = new Cookie("JWT-TOKEN", jwtToken);
         jwtCookie.setHttpOnly(true);
         jwtCookie.setPath("/"); // Set the path for the cookie
         jwtCookie.setMaxAge((int) jwtConfig.getExpirationTime() / 1000); // Set the cookie's max age to the same as the token's

@@ -15,7 +15,7 @@ public class AccountService {
     private CustomUserDetailsService customUserDetailsService;
 
     public void logout(HttpServletResponse response) {
-        Cookie logoutCookie = new Cookie("JWT-TOKEN", null);
+        final Cookie logoutCookie = new Cookie("JWT-TOKEN", null);
         logoutCookie.setHttpOnly(true);
         logoutCookie.setSecure(true);
         logoutCookie.setPath("/");

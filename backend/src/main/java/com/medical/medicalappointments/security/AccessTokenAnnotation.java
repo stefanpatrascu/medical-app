@@ -25,12 +25,12 @@ public class AccessTokenAnnotation implements HandlerMethodArgumentResolver {
 
     @Override
     public Object resolveArgument(
-        MethodParameter parameter,
-        ModelAndViewContainer mavContainer,
-        NativeWebRequest webRequest,
-        WebDataBinderFactory binderFactory) {
-        HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
-        Cookie[] cookies = request.getCookies();
+        final MethodParameter parameter,
+        final ModelAndViewContainer mavContainer,
+        final NativeWebRequest webRequest,
+        final WebDataBinderFactory binderFactory) {
+        final HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
+        final Cookie[] cookies = request.getCookies();
         String accessToken = null;
 
         if (cookies != null) {
