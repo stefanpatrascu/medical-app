@@ -1,9 +1,9 @@
 package com.medical.medicalappointments.controller;
 import com.medical.medicalappointments.model.dto.LoginRequestDTO;
 import com.medical.medicalappointments.service.AuthService;
+import com.medical.medicalappointments.util.ResponseUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,7 +15,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@Valid @RequestBody LoginRequestDTO loginRequest, HttpServletResponse response) {
+    public ResponseUtil login(@Valid @RequestBody LoginRequestDTO loginRequest, HttpServletResponse response) {
        return authService.login(loginRequest, response);
     }
 }

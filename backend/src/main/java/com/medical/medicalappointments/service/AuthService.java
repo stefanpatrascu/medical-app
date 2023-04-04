@@ -2,10 +2,10 @@ package com.medical.medicalappointments.service;
 
 import com.medical.medicalappointments.model.dto.LoginRequestDTO;
 import com.medical.medicalappointments.security.config.JwtConfig;
+import com.medical.medicalappointments.util.ResponseUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -36,7 +36,7 @@ public class AuthService {
     @Autowired
     private CsrfTokenRepository csrfTokenRepository;
 
-    public ResponseEntity<String> login(@Valid LoginRequestDTO loginRequest, HttpServletResponse response) {
+    public ResponseUtil login(@Valid LoginRequestDTO loginRequest, HttpServletResponse response) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -52,9 +52,9 @@ public class AuthService {
             addJwtCookieToResponse(response, jwtToken);
             addXsrfCookieToResponse(response);
 
-            return new ResponseEntity<>(HttpStatus.OK);
+            return ResponseUtil.success("Session started");
         } catch (AuthenticationException ex) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return ResponseUtil.error(HttpStatus.UNAUTHORIZED, "Wrong email or password");
         }
     }
 
