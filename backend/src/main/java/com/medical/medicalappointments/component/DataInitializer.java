@@ -38,7 +38,7 @@ public class DataInitializer implements CommandLineRunner {
     public void run(String... args) throws Exception {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         if (userRepository.count() == 0 && defaultAdminShouldBeCreated) {
-            User user = new User();
+            final User user = new User();
             user.setFirstName("Admin");
             user.setLastName("Admin");
             user.setEmail(defaultAdminEmail);

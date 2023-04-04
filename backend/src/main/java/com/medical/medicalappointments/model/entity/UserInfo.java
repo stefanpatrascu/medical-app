@@ -1,5 +1,7 @@
 package com.medical.medicalappointments.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +16,7 @@ import java.time.LocalDate;
 public class UserInfo {
 
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -22,5 +25,6 @@ public class UserInfo {
     private LocalDate birthDate;
 
     @OneToOne(mappedBy = "userInfo")
+    @JsonBackReference
     private User user;
 }

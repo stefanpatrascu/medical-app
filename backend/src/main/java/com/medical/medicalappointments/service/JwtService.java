@@ -1,34 +1,33 @@
 package com.medical.medicalappointments.service;
-import com.medical.medicalappointments.config.JwtConfig;
+import com.medical.medicalappointments.security.config.JwtConfig;
+import com.medical.medicalappointments.model.entity.User;
+import com.medical.medicalappointments.model.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class JwtService {
 
     @Autowired
-    private CustomUserDetailsService customUserDetailsService;
-    @Autowired
     private JwtConfig jwtConfig;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public String generateToken(String email) {
 
-        UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
-        List<String> roles = userDetails.getAuthorities().stream()
-            .map(authority -> authority.getAuthority())
-            .collect(Collectors.toList());
+        final User userDetails = userRepository.findByEmail(email)
+            .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
 
-        Claims claims = Jwts.claims();
+        final Claims claims = Jwts.claims();
         claims.put("email", email);
-        claims.put("roles", roles);
+        claims.put("id", userDetails.getId());
+        claims.put("role", userDetails.getRole().toString());
 
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtConfig.getExpirationTime());
@@ -42,7 +41,7 @@ public class JwtService {
             .compact();
     }
 
-    public Claims getClaims(String token) {
+    public Claims validateClaims(String token) {
         return Jwts.parser()
             .setSigningKey(jwtConfig.getSecret())
             .parseClaimsJws(token)
