@@ -16,6 +16,9 @@ jwt:
   secret: BauBau
   expiration-time: 86400000
 
+cors:
+  allowed-origins: http://frontend:4209
+
 default-admin-should-be-created: true
 default-admin-email: admin@admin.com
 default-admin-password: admin
