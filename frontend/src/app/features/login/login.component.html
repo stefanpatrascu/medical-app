@@ -3,44 +3,52 @@
   <div class="md:col-5 sm:col-12 login-form flex h-full">
     <div class="w-full flex align-items-center justify-content-center">
       <div class="login-card w-full">
-
         <div class="logo">
           <app-logo></app-logo>
         </div>
 
-
         <h1>Healthcare Platform Login</h1>
         <p>Access all the services and features available for healthcare professionals and patients by logging into our
           platform.</p>
-        <div>
-          <div class="p-float-label p-align-icon">
-          <span class="p-input-icon-left">
-            <i class="pi pi-envelope"></i>
-          </span>
-            <input class="w-full"
-                   pInputText id="username"/>
-            <label htmlFor="username">Email</label>
-          </div>
+        <div *ngIf="form">
+          <form [formGroup]="form" (submit)="onSubmit()">
+            <div>
+              <div class="p-float-label p-align-icon">
+                <div class="p-input-icon-left">
+                  <i class="pi pi-envelope"></i>
+                </div>
+                <input pInputText
+                       invalidField
+                       class="w-full"
+                       formControlName="email"
+                       id="email"/>
+                <label htmlFor="username">Email</label>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <div class="p-float-label p-align-icon">
+                <div class="p-input-icon-left">
+                  <i class="pi pi-lock"></i>
+                </div>
+                <input class="w-full"
+                       invalidField
+                       formControlName="password"
+                       type="password"
+                       pInputText
+                       id="password"/>
+                <label htmlFor="password">Password</label>
+              </div>
+            </div>
+            <div class="mt-4">
+              <button pButton type="submit" icon="pi pi-sign-in" class="w-full text-center justify-content-center">Login
+              </button>
+            </div>
+          </form>
         </div>
 
-        <div class="mt-4">
-          <div class="p-float-label p-align-icon">
-          <span class="p-input-icon-left">
-            <i class="pi pi-lock"></i>
-          </span>
-            <input class="w-full" type="password" pInputText id="password"/>
-            <label htmlFor="password">Password</label>
-          </div>
-        </div>
-        <div class="mt-4">
-          <button pButton type="button" icon="pi pi-sign-in" class="w-full text-center justify-content-center">Login
-          </button>
-        </div>
+
       </div>
     </div>
-
-
   </div>
-
-
 </div>

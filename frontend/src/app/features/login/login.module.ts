@@ -5,6 +5,8 @@ import {LoginRoutingModule} from "./login-routing.module";
 import { InputTextModule } from "primeng/inputtext";
 import { ButtonModule } from "primeng/button";
 import { LogoModule } from "../../shared/logo/logo.module";
+import { ReactiveFormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
 
 
 @NgModule({
@@ -12,8 +14,10 @@ import { LogoModule } from "../../shared/logo/logo.module";
     LoginComponent
   ],
   imports: [
+    ReactiveFormsModule,
     LoginRoutingModule,
     CommonModule,
+    HttpClientModule,
     InputTextModule,
     ButtonModule,
     LogoModule
