@@ -6,7 +6,7 @@ RUN npm install
 COPY . .
 
 ARG PROFILE
-RUN npm run build:$PROFILE
+RUN npm run build-$PROFILE
 
 FROM nginx:1.23.3-alpine
 EXPOSE 80
