@@ -5,6 +5,8 @@ COPY ./package-lock.json ./
 RUN npm install
 COPY . .
 
+RUN rm -rf ./.angular/cache
+
 ARG PROFILE
 RUN npm run build-$PROFILE
 
