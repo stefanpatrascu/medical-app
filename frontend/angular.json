@@ -91,9 +91,6 @@
             "docker-local": {
               "browserTarget": "medical-app-fe:build:docker-local"
             },
-            "production": {
-              "browserTarget": "medical-app-fe:build:production"
-            },
             "development": {
               "browserTarget": "medical-app-fe:build:development"
             }

@@ -27,21 +27,17 @@ services:
       - db
     ports:
       - "8089:8080"
-    environment:
-      PROFILE: ${PROFILE:-docker-local}
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      args:
+        PROFILE: ${PROFILE:-docker-local}
     container_name: frontend-medical-app-container
     depends_on:
       - backend
     ports:
-      - "4209:4209"
-    environment:
-      PROFILE: ${PROFILE:-docker-local}
+      - "4209:80"
     volumes:
       - ./frontend:/app
       - /app/node_modules
-    command: >
-      bash -c "npm run build:$$PROFILE -- --host 0.0.0.0 --port 4209
-               while true; do sleep 1d; done"
