@@ -1,3 +1,5 @@
+profile: docker-prod
+
 spring:
   datasource:
     url: jdbc:sqlserver://db:1433;databaseName=medicalApp;encrypt=false;

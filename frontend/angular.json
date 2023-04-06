@@ -36,15 +36,25 @@
             ],
             "scripts": [],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/assets/scss"]
+              "includePaths": [
+                "src/assets/scss"
+              ]
             }
           },
           "configurations": {
+            "docker-local": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.docker-local.ts"
+                }
+              ]
+            },
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
+                  "maximumWarning": "1mb",
                   "maximumError": "1mb"
                 },
                 {
@@ -75,6 +85,12 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
+            "production": {
+              "browserTarget": "medical-app-fe:build:production"
+            },
+            "docker-local": {
+              "browserTarget": "medical-app-fe:build:docker-local"
+            },
             "production": {
               "browserTarget": "medical-app-fe:build:production"
             },
@@ -111,13 +127,16 @@
             ],
             "scripts": [],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/assets/scss"]
+              "includePaths": [
+                "src/assets/scss"
+              ]
             }
           }
         }
       }
     }
   },
+  "defaultProject": "medical-app-fe",
   "cli": {
     "analytics": "8bfc5584-044f-49bf-99d3-ed13fae5ad4d"
   }

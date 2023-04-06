@@ -18,12 +18,17 @@ services:
                while true; do sleep 1d; done"
 
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      args:
+        PROFILE: ${PROFILE:-docker-local}
     container_name: backend-medical-app-container
     depends_on:
-     - db
+      - db
     ports:
       - "8089:8080"
+    environment:
+      PROFILE: ${PROFILE:-docker-local}
 
   frontend:
     build: ./frontend
@@ -32,8 +37,11 @@ services:
       - backend
     ports:
       - "4209:4209"
+    environment:
+      PROFILE: ${PROFILE:-docker-local}
     volumes:
       - ./frontend:/app
       - /app/node_modules
     command: >
-      bash -c "npm install && ng serve --host 0.0.0.0 --port 4209 --disable-host-check --proxy-config proxy.conf.json"
+      bash -c "npm run build:$$PROFILE -- --host 0.0.0.0 --port 4209
+               while true; do sleep 1d; done"

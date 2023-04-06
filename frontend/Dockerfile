@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:16 AS build
 
 WORKDIR /app
 
@@ -8,5 +8,3 @@ RUN npm install
 RUN npm install -g @angular/cli
 
 COPY . .
-
-CMD ["npm", "start"]
