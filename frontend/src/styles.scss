@@ -9,49 +9,10 @@ body {
 }
 
 html, body {
-  margin-right: 0;
-  margin-left: 0px;
+  margin: 0;
   height: 100%;
 }
 
 
-.p-button {
-  font-family: $default-font-family;
-  border-radius: 10px;
-}
-
-.p-inputtext {
-  border-radius: 10px;
-}
-
-.p-align-icon label{
-  margin-left: 30px;
-}
-
-.p-align-icon input {
-  padding-left: 40px;
-}
-
-.p-align-icon .p-input-icon-left i{
-  margin-top: -13px;
-}
-
-.text-muted {
-  display: none;
-}
-
-.p-button .p-button-icon {
-  margin-right: 10px;
-}
 
 
-.d-none {
-  display: none;
-}
-
-.invalid-feedback {
-  display: block;
-  margin-top: 0.25rem;
-  font-size: 0.875rem;
-  color: #dc3545;
-}
