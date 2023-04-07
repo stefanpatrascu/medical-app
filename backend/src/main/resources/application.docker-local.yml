@@ -2,9 +2,9 @@ profile: docker-local
 
 spring:
   datasource:
-    url: jdbc:sqlserver://db:1433;databaseName=medicalApp;encrypt=false;
-    username: sa
-    password: MyStrongP@ssw0rd
+    url: jdbc:sqlserver://db:${DB_PORT};databaseName=${DB_NAME};encrypt=false;
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
   jpa:
     show-sql: true
@@ -15,12 +15,12 @@ spring:
         dialect: org.hibernate.dialect.SQLServer2012Dialect
 
 jwt:
-  secret: BauBau
-  expiration-time: 86400000
+  secret: ${JWT_SECRET}
+  expiration-time: 3600000
 
 cors:
   allowed-origins: http://localhost:4209
 
 default-admin-should-be-created: true
-default-admin-email: admin@admin.com
-default-admin-password: admin
+default-admin-email: ${APP_ADMIN_EMAIL}
+default-admin-password: ${APP_ADMIN_PASSWORD}
