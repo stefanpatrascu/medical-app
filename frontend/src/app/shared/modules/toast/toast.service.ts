@@ -4,11 +4,11 @@ import { MessageService } from 'primeng/api';
 @Injectable()
 export class CustomToastService {
   constructor(
-    private messageService: MessageService
+    private messageService: MessageService,
   ) {
   }
 
-  success(summary: string, detail: string): void {
+  public success(summary: string, detail: string): void {
     this.messageService.add({
       severity: 'success',
       summary: summary,
@@ -16,7 +16,7 @@ export class CustomToastService {
     });
   }
 
-  error(summary: string, detail: string): void {
+  public error(summary: string, detail: string): void {
     this.messageService.add({
       severity: 'error',
       summary: summary,
@@ -24,7 +24,7 @@ export class CustomToastService {
     });
   }
 
-  warning(summary: string, detail: string): void {
+  public warning(summary: string, detail: string): void {
     this.messageService.add({
       severity: 'warn',
       summary: summary,

@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { CredentialsInterceptor } from "./interceptors/credentials.interceptor";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { CustomToastModule } from "./shared/toast/toast.module";
+import { CustomToastModule } from "./shared/modules/toast/toast.module";
 
 @NgModule({
   declarations: [

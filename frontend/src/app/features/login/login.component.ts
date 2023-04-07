@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { LoginService } from "../../api/login.service";
 import { GenericApiResponse } from "../../api/interfaces/generic.interface";
-import { CustomToastService } from "../../shared/toast/toast.service";
+import { CustomToastService } from "../../shared/modules/toast/toast.service";
 import { HttpErrorResponse } from "@angular/common/http";
 import { AccountService } from "../../api/account.service";
 import { lastValueFrom } from "rxjs";
@@ -11,7 +11,8 @@ import { IAccountResponse } from "../../api/interfaces/account.interface";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit {
 
