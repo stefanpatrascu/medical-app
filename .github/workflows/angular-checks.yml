@@ -5,7 +5,7 @@ on:
     branches:
       - '*'
   pull_request:
-    branches: [ main, develop ]
+    branches: [ develop ]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -28,7 +28,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install Dependencies
-        run: npm ci
+        run: npm install
 
       - name: Run Build
         run: npm run build
