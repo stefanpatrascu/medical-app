@@ -1,4 +1,4 @@
-name: Maven Checks
+name: Java with Maven Checks
 
 on:
   push:
