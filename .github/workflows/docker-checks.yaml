@@ -41,31 +41,3 @@ jobs:
           JWT_SECRET: ${{ env.JWT_SECRET }}
           APP_ADMIN_EMAIL: ${{ env.APP_ADMIN_EMAIL }}
           APP_ADMIN_PASSWORD: ${{ env.APP_ADMIN_PASSWORD }}
-
-
-  maven-build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up JDK
-        uses: actions/setup-java@v2
-        with:
-          java-version: '17'
-          distribution: 'adopt'
-
-      - name: Create Database Image
-        run: docker-compose up -d --force-recreate db
-
-      - name: Build and package backend
-        working-directory: ./backend
-        run: mvn clean install
-        env:
-          DB_NAME: ${{ env.DB_NAME }}
-          DB_USERNAME: ${{ env.DB_USERNAME }}
-          DB_PASSWORD: ${{ env.DB_PASSWORD }}
-          JWT_SECRET: ${{ env.JWT_SECRET }}
-          APP_ADMIN_EMAIL: ${{ env.APP_ADMIN_EMAIL }}
-          APP_ADMIN_PASSWORD: ${{ env.APP_ADMIN_PASSWORD }}
