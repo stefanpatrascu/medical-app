@@ -32,7 +32,9 @@ jobs:
         run: npm ci
 
       - name: Run Build
+        working-directory: frontend
         run: npm run build
 
       - name: Run Tests
+        working-directory: frontend
         run: npm run ng test -- --no-watch --no-progress --watch=false --code-coverage --browsers=ChromeHeadless
