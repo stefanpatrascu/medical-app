@@ -4,7 +4,7 @@
 
 export const environment = {
   profile: "local",
-  apiUrl: 'http://localhost:8080',
+  apiUrl: 'http://localhost:8080/api',
   production: false
 };
 

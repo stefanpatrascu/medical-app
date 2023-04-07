@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { CredentialsInterceptor } from "./interceptors/credentials.interceptor";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { CustomToastModule } from "./shared/toast/toast.module";
 
 @NgModule({
   declarations: [
@@ -12,10 +14,13 @@ import { CredentialsInterceptor } from "./interceptors/credentials.interceptor";
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CustomToastModule
   ],
-  providers: [{
+  providers: [
+    {
     provide: HTTP_INTERCEPTORS,
     useClass: CredentialsInterceptor,
     multi: true

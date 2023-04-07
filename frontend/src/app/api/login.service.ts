@@ -9,7 +9,7 @@ import { HttpClient } from "@angular/common/http";
 })
 export class LoginService {
 
-  path: string = environment.apiUrl + '/api/auth';
+  private path: string = environment.apiUrl + '/auth';
 
   constructor(private http: HttpClient) { }
   public authentificate({email, password}: {email: string, password: string}): Observable<GenericApiResponse> {
