@@ -50,10 +50,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .csrf()
             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-            .ignoringAntMatchers("/auth/login")
+            .ignoringAntMatchers("/api/auth/login")
             .and()
             .authorizeRequests()
-            .antMatchers("/auth/login").permitAll()
+            .antMatchers("/api/auth/login").permitAll()
             .anyRequest().authenticated()
             .and()
             .formLogin().disable()

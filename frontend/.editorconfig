@@ -11,6 +11,18 @@ trim_trailing_whitespace = true
 [*.ts]
 quote_type = single
 
+[*.html]
+quote_type = double
+
+[*.yaml]
+quote_type = single
+
 [*.md]
 max_line_length = off
 trim_trailing_whitespace = false
+
+[*.js]
+ij_javascript_spaces_within_imports = true
+
+[*.ts]
+ij_typescript_spaces_within_imports = true

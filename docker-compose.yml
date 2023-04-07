@@ -1,39 +1,53 @@
-version: '3'
+version: '3.8'
 services:
   db:
     image: mcr.microsoft.com/mssql/server:2019-latest
     container_name: mssql-medical-app-container
     environment:
       ACCEPT_EULA: Y
-      SA_PASSWORD: MyStrongP@ssw0rd
       MSSQL_TCP_PORT: 1433
+      DB_USERNAME: ${DB_USERNAME}
+      SA_PASSWORD: ${DB_PASSWORD}
     ports:
       - "14333:1433"
     volumes:
       - ./sql:/sql
     command: >
       bash -c "(/opt/mssql/bin/sqlservr &)
-               until /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $$SA_PASSWORD -Q 'SELECT 1'; do sleep 1; done
+               until /opt/mssql-tools/bin/sqlcmd -S localhost -U $$DB_USERNAME -P $$SA_PASSWORD -Q 'SELECT 1'; do sleep 1; done
                /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $$SA_PASSWORD -i /sql/init.sql
                while true; do sleep 1d; done"
 
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      args:
+        PROFILE: ${PROFILE:-docker-local}
     container_name: backend-medical-app-container
+    environment:
+      DB_PORT: ${DB_PORT:-1433}
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      APP_ADMIN_EMAIL: ${APP_ADMIN_EMAIL}
+      APP_ADMIN_PASSWORD: ${APP_ADMIN_PASSWORD}
     depends_on:
-     - db
+      - db
     ports:
       - "8089:8080"
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      args:
+        PROFILE: ${PROFILE:-docker-local}
     container_name: frontend-medical-app-container
     depends_on:
+      - db
       - backend
     ports:
-      - "4209:4209"
+      - "4209:80"
     volumes:
       - ./frontend:/app
       - /app/node_modules
-    command: >
-      bash -c "npm install && ng serve --host 0.0.0.0 --port 4209 --disable-host-check --proxy-config proxy.conf.json"

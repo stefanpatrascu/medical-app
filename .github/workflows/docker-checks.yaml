@@ -1,0 +1,43 @@
+name: Docker Checks
+
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches: [ develop ]
+env:
+  DB_USERNAME: ${{ secrets.DB_USERNAME }}
+  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+  JWT_SECRET: ${{ secrets.JWT_SECRET }}
+  APP_ADMIN_EMAIL: ${{ secrets.APP_ADMIN_EMAIL }}
+  APP_ADMIN_PASSWORD: ${{ secrets.APP_ADMIN_PASSWORD }}
+  DB_NAME: medicalApp
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  docker-checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      - name: Create Docker Images
+        run: docker-compose up -d --force-recreate
+        env:
+          DB_NAME: ${{ env.DB_NAME }}
+          DB_USERNAME: ${{ env.DB_USERNAME }}
+          DB_PASSWORD: ${{ env.DB_PASSWORD }}
+          JWT_SECRET: ${{ env.JWT_SECRET }}
+          APP_ADMIN_EMAIL: ${{ env.APP_ADMIN_EMAIL }}
+          APP_ADMIN_PASSWORD: ${{ env.APP_ADMIN_PASSWORD }}

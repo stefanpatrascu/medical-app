@@ -1,11 +1,13 @@
 package com.medical.medicalappointments.service;
 
 import com.medical.medicalappointments.model.dto.LoginRequestDTO;
+import com.medical.medicalappointments.model.dto.ResponseEntityDTO;
 import com.medical.medicalappointments.security.config.JwtConfig;
 import com.medical.medicalappointments.util.ResponseUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -36,7 +38,7 @@ public class AuthService {
     @Autowired
     private CsrfTokenRepository csrfTokenRepository;
 
-    public ResponseUtil login(@Valid LoginRequestDTO loginRequest, HttpServletResponse response) {
+    public ResponseEntity<ResponseEntityDTO> login(@Valid LoginRequestDTO loginRequest, HttpServletResponse response) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(

@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'global-variables.scss';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,600;1,300;1,400&display=swap');
+
+body {
+  font-family: $default-font-family;
+  font-size: $default-font-size;
+  color: #333448;
+  background: linear-gradient(0deg,rgba(51,53,72,.05),rgba(51,53,72,.05)),#ffffff;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+
+
+

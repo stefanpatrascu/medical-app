@@ -1,0 +1,21 @@
+@import "mixin/card";
+@import "mixin/screens";
+@import "mixin/component";
+
+:host {
+  @include host();
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url(/assets/images/login-page-cover-1.jpg);
+  background-size: cover;
+}
+
+.login-page {
+  @include box(0px, 0px, 100%, null);
+
+  .login-card {
+    @include white-card;
+    @include mobile {
+      @include white-card(0px, 20px);
+    }
+  }
+}
+

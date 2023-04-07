@@ -1,5 +1,6 @@
 package com.medical.medicalappointments.controller;
 
+import com.medical.medicalappointments.model.dto.ResponseEntityDTO;
 import com.medical.medicalappointments.security.AccessToken;
 import com.medical.medicalappointments.model.entity.User;
 import com.medical.medicalappointments.service.AccountService;
@@ -22,7 +23,7 @@ public class AccountController {
     private AccountService accountService;
 
     @PostMapping("/logout")
-    public ResponseUtil logout(HttpServletResponse response) {
+    public ResponseEntity<ResponseEntityDTO> logout(HttpServletResponse response) {
         accountService.logout(response);
         return ResponseUtil.success("Session successfully closed");
     }
