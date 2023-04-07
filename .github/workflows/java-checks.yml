@@ -1,4 +1,4 @@
-name: Docker Checks
+name: Maven Checks
 
 on:
   push:
