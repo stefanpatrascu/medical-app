@@ -2,7 +2,7 @@ profile: docker-prod
 
 spring:
   datasource:
-    url: jdbc:sqlserver://db:${DB_PORT};databaseName=${DB_NAME};encrypt=false;
+    url: jdbc:sqlserver://db:1433;databaseName=medicalApp;encrypt=false;
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver

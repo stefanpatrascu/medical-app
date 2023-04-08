@@ -26,7 +26,6 @@ To run this project, you need to have Docker installed on your local machine. He
 
 
 ```bash
-DB_NAME=medicalApp
 DB_USERNAME=sa
 DB_PASSWORD=MyStrongP@ssw0rd
 JWT_SECRET=qiBaPmXamTMorenafQzeK7GOOA

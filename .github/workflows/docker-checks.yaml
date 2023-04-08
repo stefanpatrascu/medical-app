@@ -12,7 +12,6 @@ env:
   JWT_SECRET: ${{ secrets.JWT_SECRET }}
   APP_ADMIN_EMAIL: ${{ secrets.APP_ADMIN_EMAIL }}
   APP_ADMIN_PASSWORD: ${{ secrets.APP_ADMIN_PASSWORD }}
-  DB_NAME: medicalApp
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -35,7 +34,6 @@ jobs:
       - name: Create Docker Images
         run: docker-compose up -d --force-recreate
         env:
-          DB_NAME: ${{ env.DB_NAME }}
           DB_USERNAME: ${{ env.DB_USERNAME }}
           DB_PASSWORD: ${{ env.DB_PASSWORD }}
           JWT_SECRET: ${{ env.JWT_SECRET }}
