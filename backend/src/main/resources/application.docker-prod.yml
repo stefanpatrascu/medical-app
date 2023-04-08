@@ -16,9 +16,6 @@ spring:
 
   liquibase:
     change-log: classpath:db/changelog/db.changelog.xml
-jwt:
-  secret: ${JWT_SECRET}
-  expiration-time: 3600000
 
 cors:
   allowed-origins: http://frontend:4209

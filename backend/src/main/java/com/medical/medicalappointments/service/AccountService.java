@@ -9,6 +9,8 @@ import com.medical.medicalappointments.util.ResponseUtil;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,9 +27,6 @@ public class AccountService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private JwtService jwtService;
 
 
     public void logout(HttpServletResponse response) {
@@ -47,9 +46,9 @@ public class AccountService {
     }
 
 
-    public ResponseEntity<ResponseEntityDTO> updateAccount(Claims claims, UpdateUserRequestDTO updatedUser, HttpServletResponse response) {
+    public ResponseEntity<ResponseEntityDTO> updateAccount(Authentication authentication, UpdateUserRequestDTO updatedUser) {
         final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        final User currentUser = getCurrentUser(claims.get("email").toString());
+        final User currentUser = getCurrentUser(authentication.getName());
         currentUser.setFirstName(updatedUser.getFirstName());
         currentUser.setLastName(updatedUser.getLastName());
         currentUser.setEmail(updatedUser.getEmail());
@@ -66,9 +65,11 @@ public class AccountService {
 
         userRepository.save(currentUser);
 
-        final String newJwtToken = jwtService.generateToken(currentUser.getEmail());
-        jwtService.addJwtCookieToResponse(response, newJwtToken);
+        // Re-authenticate user with the new email and password
+        UsernamePasswordAuthenticationToken newAuthentication = new UsernamePasswordAuthenticationToken(updatedUser.getEmail(), updatedUser.getPassword(), authentication.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(newAuthentication);
 
         return ResponseUtil.success("Account successfully updated");
     }
+
 }

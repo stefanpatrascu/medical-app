@@ -2,7 +2,6 @@ package com.medical.medicalappointments.service;
 
 import com.medical.medicalappointments.model.dto.LoginRequestDTO;
 import com.medical.medicalappointments.model.dto.ResponseEntityDTO;
-import com.medical.medicalappointments.security.config.JwtConfig;
 import com.medical.medicalappointments.util.ResponseUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +29,6 @@ public class AuthService {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private JwtService jwtService;
-
-    @Autowired
-    private JwtConfig jwtConfig;
-
-    @Autowired
     private CsrfTokenRepository csrfTokenRepository;
 
     public ResponseEntity<ResponseEntityDTO> login(@Valid LoginRequestDTO loginRequest, HttpServletResponse response) {
@@ -49,9 +42,6 @@ public class AuthService {
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            final String jwtToken = jwtService.generateToken(authentication.getName());
-
-            jwtService.addJwtCookieToResponse(response, jwtToken);
             addXsrfCookieToResponse(response);
 
             return ResponseUtil.success("Session started");
