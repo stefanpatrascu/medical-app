@@ -8,6 +8,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
 @Service
@@ -46,5 +48,13 @@ public class JwtService {
             .setSigningKey(jwtConfig.getSecret())
             .parseClaimsJws(token)
             .getBody();
+    }
+
+    public void addJwtCookieToResponse(HttpServletResponse response, String jwtToken) {
+        final Cookie jwtCookie = new Cookie("JWT-TOKEN", jwtToken);
+        jwtCookie.setHttpOnly(true);
+        jwtCookie.setPath("/"); // Set the path for the cookie
+        jwtCookie.setMaxAge((int) jwtConfig.getExpirationTime() / 1000); // Set the cookie's max age to the same as the token's
+        response.addCookie(jwtCookie);
     }
 }

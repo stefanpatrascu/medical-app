@@ -51,7 +51,7 @@ public class AuthService {
 
             final String jwtToken = jwtService.generateToken(authentication.getName());
 
-            addJwtCookieToResponse(response, jwtToken);
+            jwtService.addJwtCookieToResponse(response, jwtToken);
             addXsrfCookieToResponse(response);
 
             return ResponseUtil.success("Session started");
@@ -70,11 +70,4 @@ public class AuthService {
         response.addCookie(csrfCookie);
     }
 
-    private void addJwtCookieToResponse(HttpServletResponse response, String jwtToken) {
-        final Cookie jwtCookie = new Cookie("JWT-TOKEN", jwtToken);
-        jwtCookie.setHttpOnly(true);
-        jwtCookie.setPath("/"); // Set the path for the cookie
-        jwtCookie.setMaxAge((int) jwtConfig.getExpirationTime() / 1000); // Set the cookie's max age to the same as the token's
-        response.addCookie(jwtCookie);
-    }
 }
