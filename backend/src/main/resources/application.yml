@@ -14,13 +14,8 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.SQLServer2012Dialect
 
-jwt:
-  secret: djmmt049@$2bJa9
-  expiration-time: 3600000
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog.xml
 
 cors:
   allowed-origins: http://localhost:4200
-
-default-admin-should-be-created: true
-default-admin-email: admin@admin.com
-default-admin-password: admin
