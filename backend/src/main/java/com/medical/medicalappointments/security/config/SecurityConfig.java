@@ -13,10 +13,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.web.filter.CorsFilter;
@@ -34,6 +35,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private RoleInterceptor roleInterceptor;
+
+    @Autowired
+    private SessionRegistry sessionRegistry;
 
     private CorsFilter corsFilter;
 
@@ -58,6 +62,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
+    }
+
     protected void configure(HttpSecurity http) throws Exception {
         http
             .csrf()
@@ -73,6 +82,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint)
             .and()
             .sessionManagement()
+            .maximumSessions(1)
+            .sessionRegistry(sessionRegistry)
+            .and()
             .sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
     }
 
