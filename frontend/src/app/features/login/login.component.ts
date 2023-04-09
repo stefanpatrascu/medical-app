@@ -1,12 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { LoginService } from "../../api/login.service";
-import { GenericApiResponse } from "../../api/interfaces/generic.interface";
+import { LoginApiService } from "../../api/login/login-api.service";
+import { GenericApiResponse } from "../../interfaces/generic.interface";
 import { CustomToastService } from "../../shared/modules/toast/toast.service";
 import { HttpErrorResponse } from "@angular/common/http";
-import { AccountService } from "../../api/account.service";
+import { AccountApiService } from "../../api/account/account-api.service";
 import { lastValueFrom } from "rxjs";
-import { IAccountResponse } from "../../api/interfaces/account.interface";
+import { IAccountResponse } from "../../api/account/account.interface";
+import { Router } from "@angular/router";
+import { RouteEnum } from "../../enums/route.enum";
 
 @Component({
   selector: 'app-login',
@@ -19,9 +21,10 @@ export class LoginComponent implements OnInit {
   form!: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
-              private loginService: LoginService,
-              private accountService: AccountService,
-              private toastService: CustomToastService) {
+              private loginService: LoginApiService,
+              private accountService: AccountApiService,
+              private toastService: CustomToastService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -39,10 +42,15 @@ export class LoginComponent implements OnInit {
     this.loginService.authentificate(this.form.value)
       .subscribe({
         next: async () => {
-          const account: IAccountResponse = await lastValueFrom(this.accountService.getMyAccount());
-          if (account) {
-            this.toastService.success("Success", "Welcome back, " + account.lastName + " " + account.firstName + "!");
-          }
+          this.accountService.getMyAccount().subscribe((account: IAccountResponse | null ) => {
+            if (account) {
+              if (account.userInfo === null || account.email === "admin@admin.com") {
+                this.router.navigate([RouteEnum.FIRST_SETUP_PATH]);
+                return;
+              }
+              this.toastService.success("Success", "Welcome back, " + account.lastName + " " + account.firstName + "!");
+            }
+          });
         },
         error: (error: HttpErrorResponse) => {
           if (error.status === 401) {
