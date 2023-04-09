@@ -27,6 +27,7 @@ public class AccountController {
         return ResponseUtil.success("Session successfully closed");
     }
 
+
     @GetMapping("/my-account")
     public ResponseEntity<User> updateMyAccount(Authentication authentication) {
         final User user = accountService.getCurrentUser(authentication.getName());
@@ -38,5 +39,6 @@ public class AccountController {
         final ResponseEntity<ResponseEntityDTO> updateAccount = accountService.updateAccount(authentication, updatedUser);
         return updateAccount;
     }
+
 }
 
