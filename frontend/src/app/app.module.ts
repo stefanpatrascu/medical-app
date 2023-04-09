@@ -8,7 +8,7 @@ import { CredentialsInterceptor } from "./interceptors/credentials.interceptor";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CustomToastModule } from "./shared/modules/toast/toast.module";
 import { XsrfTokenInterceptor } from "./interceptors/xsrf-token.interceptor";
-import { RefreshSessionInterceptor } from "./interceptors/refresh-session.interceptors";
+import { RefreshSessionInterceptor } from "./interceptors/refresh-session.interceptor";
 
 @NgModule({
   declarations: [
