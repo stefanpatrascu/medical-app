@@ -20,3 +20,5 @@ spring:
 cors:
   allowed-origins: http://frontend:4209
 
+upload:
+  path: src/main/resources/static/images/avatars

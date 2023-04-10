@@ -88,7 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .sessionRegistry(sessionRegistry)
             .and()
             .sessionCreationPolicy(SessionCreationPolicy.ALWAYS).and()
-            .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class);;
     }
 
 }
