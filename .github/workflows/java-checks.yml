@@ -3,11 +3,9 @@ name: Java with Maven Checks
 on:
   push:
     branches:
-      - main
+      - '*'
   pull_request:
-    branches:
-      - main
-  workflow_dispatch: {}
+    branches: [ develop ]
 
 env:
   DB_USERNAME: ${{ secrets.DB_USERNAME }}
