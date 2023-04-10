@@ -47,27 +47,47 @@ public class AccountService {
 
 
     public ResponseEntity<ResponseEntityDTO> updateAccount(Authentication authentication, UpdateUserRequestDTO updatedUser) {
-        final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         final User currentUser = getCurrentUser(authentication.getName());
-        currentUser.setFirstName(updatedUser.getFirstName());
-        currentUser.setLastName(updatedUser.getLastName());
-        currentUser.setEmail(updatedUser.getEmail());
-        currentUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
-        UserInfo updatedUserInfo = currentUser.getUserInfo();
-        if (updatedUserInfo != null) {
-            UserInfo currentUserInfo = currentUser.getUserInfo();
-            if (currentUserInfo == null) {
-                currentUserInfo = new UserInfo();
-            }
-            currentUserInfo.setCnp(updatedUserInfo.getCnp());
-            currentUserInfo.setBirthDate(updatedUserInfo.getBirthDate());
+        if (updatedUser.getFirstName() != null) {
+            currentUser.setFirstName(updatedUser.getFirstName());
         }
+        if (updatedUser.getLastName() != null) {
+            currentUser.setLastName(updatedUser.getLastName());
+        }
+        if (updatedUser.getEmail() != null) {
+            currentUser.setEmail(updatedUser.getEmail());
+        }
+        if (updatedUser.getPassword() != null) {
+            final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            currentUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+        }
+        UserInfo updatedUserInfo = currentUser.getUserInfo();
+        if (updatedUserInfo == null) {
+            updatedUserInfo = new UserInfo();
+        }
+        if (updatedUser.getCnp() != null) {
+            updatedUserInfo.setCnp(updatedUser.getCnp());
+        }
+        if (updatedUser.getBirthDate() != null) {
+            updatedUserInfo.setBirthDate(updatedUser.getBirthDate());
+        }
+        currentUser.setUserInfo(updatedUserInfo);
 
         userRepository.save(currentUser);
 
-        // Re-authenticate user with the new email and password
-        UsernamePasswordAuthenticationToken newAuthentication = new UsernamePasswordAuthenticationToken(updatedUser.getEmail(), updatedUser.getPassword(), authentication.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+        if (updatedUser.getPassword() != null && updatedUser.getEmail() != null) {
+            // Re-authenticate user with the new email and password
+            UsernamePasswordAuthenticationToken newAuthentication = new UsernamePasswordAuthenticationToken(updatedUser.getEmail(), updatedUser.getPassword(), authentication.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+        } else if (updatedUser.getEmail() != null && updatedUser.getPassword() == null) {
+            // Re-authenticate user with the new email
+            UsernamePasswordAuthenticationToken newAuthentication = new UsernamePasswordAuthenticationToken(updatedUser.getEmail(), currentUser.getPassword(), authentication.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+        } else if (updatedUser.getEmail() == null && updatedUser.getPassword() != null) {
+            // Re-authenticate user with the new password
+            UsernamePasswordAuthenticationToken newAuthentication = new UsernamePasswordAuthenticationToken(currentUser.getEmail(), updatedUser.getPassword(), authentication.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+        }
 
         return ResponseUtil.success("Account successfully updated");
     }
