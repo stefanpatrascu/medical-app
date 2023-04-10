@@ -2,6 +2,7 @@
 
 .p-button {
   font-family: $default-font-family;
+  font-size: $default-font-size;
   border-radius: 10px;
 
   .p-button-icon {
@@ -9,7 +10,16 @@
   }
 }
 
+.required {
+  color: #B00020;
+}
+
+.p-message {
+  font-size: $default-font-size;
+}
+
 .p-inputtext {
+  font-size: $default-font-size;
   border-radius: 10px;
 }
 
@@ -24,6 +34,7 @@
   }
 
   .p-input-icon-left i {
+    z-index: 1;
     margin-top: -13px;
   }
 }

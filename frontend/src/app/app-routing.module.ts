@@ -9,8 +9,8 @@ const routes: Routes = [
     loadChildren: () => import('./features/login/login.module').then(m => m.LoginModule)
   },
   {
-    path: RouteEnum.FIRST_SETUP_PATH,
-    loadChildren: () => import('./features/first-setup/first-setup.module').then(m => m.FirstSetupModule)
+    path: RouteEnum.EDIT_ACCOUNT,
+    loadChildren: () => import('./features/edit-account/edit-account.module').then(m => m.EditAccountModule)
   }
 ];
 

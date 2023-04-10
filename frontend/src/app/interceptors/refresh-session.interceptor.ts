@@ -12,6 +12,7 @@ import { catchError, switchMap } from 'rxjs/operators';
 import { SessionsApiService } from "../api/session/session.service";
 import { SessionApiEnum } from "../api/session/session.enum";
 import { LoginApiEnum } from "../api/login/login.enum";
+import { RouteEnum } from "../enums/route.enum";
 
 @Injectable()
 export class RefreshSessionInterceptor implements HttpInterceptor {
@@ -40,7 +41,7 @@ export class RefreshSessionInterceptor implements HttpInterceptor {
             }),
             catchError((refreshError: HttpErrorResponse) => {
               // Refresh session failed, redirect the user to the login page
-              // this.router.navigate([RouteEnum.LOGIN_PATH]);
+              this.router.navigate([RouteEnum.LOGIN_PATH]);
               return throwError(refreshError);
             })
           );

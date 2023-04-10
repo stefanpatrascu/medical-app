@@ -1,0 +1,9 @@
+<input #fileInput class="hidden" type="file" (change)="onFileSelected($event)"/>
+<div class="profile-avatar" (click)="triggerFileInput()">
+  <div class="profile-avatar__overlay">
+    <span class="profile-avatar__icon">
+    <i class="pi pi-pencil"></i>
+  </span>
+  </div>
+  <img *ngIf="avatarUrl" [src]="avatarUrl"/>
+</div>

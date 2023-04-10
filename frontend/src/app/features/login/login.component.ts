@@ -5,7 +5,7 @@ import { GenericApiResponse } from "../../interfaces/generic.interface";
 import { CustomToastService } from "../../shared/modules/toast/toast.service";
 import { HttpErrorResponse } from "@angular/common/http";
 import { AccountApiService } from "../../api/account/account-api.service";
-import { lastValueFrom } from "rxjs";
+import { filter, lastValueFrom } from "rxjs";
 import { IAccountResponse } from "../../api/account/account.interface";
 import { Router } from "@angular/router";
 import { RouteEnum } from "../../enums/route.enum";
@@ -38,17 +38,15 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-
     this.loginService.authentificate(this.form.value)
       .subscribe({
         next: async () => {
           this.accountService.getMyAccount().subscribe((account: IAccountResponse | null ) => {
             if (account) {
-              if (account.userInfo === null || account.email === "admin@admin.com") {
-                this.router.navigate([RouteEnum.FIRST_SETUP_PATH]);
-                return;
-              }
-              this.toastService.success("Success", "Welcome back, " + account.lastName + " " + account.firstName + "!");
+              this.router.navigate([RouteEnum.EDIT_ACCOUNT]).then(() => {
+                this.toastService.success("Success",
+                  "Welcome back, " + account.lastName + " " + account.firstName + "!");
+              });
             }
           });
         },

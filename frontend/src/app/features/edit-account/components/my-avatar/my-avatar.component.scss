@@ -1,0 +1,37 @@
+.profile-avatar {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 100%;
+  overflow: hidden;
+  border: 2px solid white;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.05);
+
+
+  &:hover {
+    .profile-avatar__overlay {
+      display: flex;
+    }
+  }
+
+
+  .profile-avatar__overlay {
+    display: none;
+    width: 150px;
+    cursor: pointer;
+    height: 150px;
+    background: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 0px;
+    align-items: center;
+    justify-content: center;
+    left: 0px;
+  }
+
+  .profile-avatar__icon {
+    i {
+      font-size: 30px;
+      color: white;
+    }
+  }
+}

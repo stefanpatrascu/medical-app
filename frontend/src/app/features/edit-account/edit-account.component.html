@@ -1,0 +1,123 @@
+<h1>Edit Account</h1>
+
+<p-messages [value]="messages" [enableService]="false" [closable]="false"></p-messages>
+
+<app-my-avatar></app-my-avatar>
+
+<form class="mt-6" [formGroup]="form" (submit)="onSubmit()">
+  <h2>Account Information</h2>
+  <div class="grid">
+    <div class="col-12">
+      <div class="grid">
+        <div class="col-12 md:col-6">
+          <div class="p-float-label p-align-icon">
+            <div class="p-input-icon-left">
+              <i class="pi pi-user"></i>
+            </div>
+            <input pInputText
+                   invalidField
+                   class="w-full"
+                   formControlName="firstName"
+                   id="firstName"/>
+            <label htmlFor="email">First Name <span class="required">*</span></label>
+          </div>
+        </div>
+        <div class="col-12 md:col-6">
+          <div class="p-float-label p-align-icon">
+            <div class="p-input-icon-left">
+              <i class="pi pi-user"></i>
+            </div>
+            <input class="w-full"
+                   invalidField
+                   formControlName="lastName"
+                   type="lastName"
+                   pInputText
+                   id="lastName"/>
+            <label htmlFor="lastName">Last Name <span class="required">*</span></label>
+          </div>
+        </div>
+      </div>
+      <div class="grid mt-2">
+        <div class="col-16 md:col-6">
+          <div class="p-float-label p-align-icon">
+            <div class="p-input-icon-left">
+              <i class="pi pi-user"></i>
+            </div>
+            <input pInputText
+                   invalidField
+                   class="w-full"
+                   formControlName="cnp"
+                   id="cnp"/>
+            <label htmlFor="email">CNP <span class="required">*</span></label>
+          </div>
+        </div>
+        <div class="col-12 md:col-6">
+          <div class="p-float-label p-align-icon">
+            <div class="p-input-icon-left">
+              <i class="pi pi-calendar"></i>
+            </div>
+            <p-calendar formControlName="birthDate" styleClass="w-full"
+                        appendTo="body" [readonlyInput]="true"></p-calendar>
+            <label htmlFor="email">Date of birth <span class="required">*</span></label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <h2>Access Information</h2>
+  <div class="grid">
+    <div class="col-12">
+      <div class="grid mt-2">
+        <div class="col-12 md:col-6">
+          <div class="p-float-label p-align-icon">
+            <div class="p-input-icon-left">
+              <i class="pi pi-envelope"></i>
+            </div>
+            <input pInputText
+                   invalidField
+                   class="w-full"
+                   formControlName="currentEmail"
+                   readonly
+                   id="currentEmail"/>
+            <label htmlFor="currentEmail">Current Email <span class="required">*</span></label>
+          </div>
+        </div>
+        <div class="col-12 md:col-6">
+          <div class="p-float-label p-align-icon">
+            <div class="p-input-icon-left">
+              <i class="pi pi-envelope"></i>
+            </div>
+            <input pInputText
+                   invalidField
+                   class="w-full"
+                   formControlName="email"
+                   id="email"/>
+            <label htmlFor="email">New Email <span class="required">*</span></label>
+          </div>
+        </div>
+      </div>
+      <div class="grid mt-2">
+        <div class="col-12">
+          <div class="p-float-label p-align-icon">
+            <div class="p-input-icon-left">
+              <i class="pi pi-lock"></i>
+            </div>
+            <input class="w-full"
+                   invalidField
+                   formControlName="password"
+                   type="password"
+                   pInputText
+                   id="password"/>
+            <label htmlFor="password">New Password <span class="required">*</span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <button pButton type="submit" icon="pi pi-refresh">Update Account
+    </button>
+  </div>
+</form>
