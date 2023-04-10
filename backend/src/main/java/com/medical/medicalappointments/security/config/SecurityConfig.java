@@ -1,11 +1,11 @@
 package com.medical.medicalappointments.security.config;
 
 import com.medical.medicalappointments.component.RestAuthenticationEntryPoint;
-import com.medical.medicalappointments.component.RoleInterceptor;
 import com.medical.medicalappointments.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -33,15 +33,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-
-    @Autowired
-    private RoleInterceptor roleInterceptor;
-
-    @Autowired
     private SessionRegistry sessionRegistry;
 
     @Autowired
     private CorsFilter corsFilter;
+
+    @Autowired
+    public void setSessionRegistry(@Lazy SessionRegistry sessionRegistry) {
+        this.sessionRegistry = sessionRegistry;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
