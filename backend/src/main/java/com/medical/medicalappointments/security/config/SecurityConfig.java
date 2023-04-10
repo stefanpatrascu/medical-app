@@ -28,19 +28,20 @@ import org.springframework.web.filter.CorsFilter;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private CustomUserDetailsService userDetailsService;
+    private final CustomUserDetailsService userDetailsService;
+    private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+    private final SessionRegistry sessionRegistry;
+    private final CorsFilter corsFilter;
 
     @Autowired
-    private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-    private SessionRegistry sessionRegistry;
-
-    @Autowired
-    private CorsFilter corsFilter;
-
-    @Autowired
-    public void setSessionRegistry(@Lazy SessionRegistry sessionRegistry) {
+    public SecurityConfig(@Lazy SessionRegistry sessionRegistry,
+                          CustomUserDetailsService userDetailsService,
+                          RestAuthenticationEntryPoint restAuthenticationEntryPoint,
+                          CorsFilter corsFilter) {
         this.sessionRegistry = sessionRegistry;
+        this.userDetailsService = userDetailsService;
+        this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
+        this.corsFilter = corsFilter;
     }
 
     @Override
@@ -88,7 +89,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .sessionRegistry(sessionRegistry)
             .and()
             .sessionCreationPolicy(SessionCreationPolicy.ALWAYS).and()
-            .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class);;
+            .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
 }
