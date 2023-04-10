@@ -17,6 +17,7 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
@@ -39,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private SessionRegistry sessionRegistry;
 
+    @Autowired
     private CorsFilter corsFilter;
 
     @Override
@@ -85,7 +87,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .maximumSessions(1)
             .sessionRegistry(sessionRegistry)
             .and()
-            .sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
+            .sessionCreationPolicy(SessionCreationPolicy.ALWAYS).and()
+            .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
 }
