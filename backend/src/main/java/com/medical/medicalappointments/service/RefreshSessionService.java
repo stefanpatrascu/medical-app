@@ -1,6 +1,5 @@
 package com.medical.medicalappointments.service;
 
-// RefreshSessionService.java
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -16,8 +15,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class RefreshSessionService {
 
-    @Autowired
+
     private SessionRegistry sessionRegistry;
+
+    @Autowired
+    public RefreshSessionService(SessionRegistry sessionRegistry) {
+        this.sessionRegistry = sessionRegistry;
+    }
 
     public void refreshSession(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(false);
