@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditAccountComponent } from './edit-account.component';
+import { EditAccountModule } from "./edit-account.module";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { CustomToastService } from "../../shared/modules/toast/toast.service";
+import { MessageService } from "primeng/api";
 
 describe('EditAccountComponent', () => {
   let component: EditAccountComponent;
@@ -8,7 +12,8 @@ describe('EditAccountComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditAccountComponent ]
+      imports: [EditAccountModule, HttpClientTestingModule],
+      providers: [CustomToastService, MessageService]
     })
     .compileComponents();
 

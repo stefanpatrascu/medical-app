@@ -44,7 +44,7 @@ export class EditAccountComponent implements OnInit {
       cnp: new FormControl<string | null>(null, [Validators.required]),
       currentEmail: new FormControl<string | null>(null, [Validators.required, Validators.email]),
       email: new FormControl<string | null>(null, [Validators.required, Validators.email]),
-      password: new FormControl<string | null>(null, [Validators.required, Validators.email]),
+      password: new FormControl<string | null>(null, [Validators.required]),
       birthDate: new FormControl<Date | null>(null, [Validators.required]),
     });
     this.populateForm();
