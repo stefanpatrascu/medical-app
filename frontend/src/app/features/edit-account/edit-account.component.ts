@@ -4,6 +4,7 @@ import { AccountApiService } from "../../api/account/account-api.service";
 import { IAccountResponse, IAccountUpdateRequest } from "../../api/account/account.interface";
 import { Message } from "primeng/api";
 import { DatePipe } from "@angular/common";
+import { CustomToastService } from "../../shared/modules/toast/toast.service";
 
 @Component({
   selector: 'app-edit-account',
@@ -18,7 +19,8 @@ export class EditAccountComponent implements OnInit {
 
   constructor(private readonly accountService: AccountApiService,
               private readonly formBuilder: FormBuilder,
-              private readonly datePipe: DatePipe) {
+              private readonly datePipe: DatePipe,
+              private readonly toastService: CustomToastService) {
   }
 
   ngOnInit(): void {
@@ -59,6 +61,8 @@ export class EditAccountComponent implements OnInit {
       this.accountService.updateAccount(accountUpdateRequest)
         .subscribe(() => {
           this.populateForm();
+          this.toastService.success("Success",
+            "Account updated successfully!");
         });
     }
   }
