@@ -1,5 +1,3 @@
-
-
 export interface IAccountResponse {
   email: string;
   firstName: string;
@@ -8,8 +6,15 @@ export interface IAccountResponse {
   userInfo: IUserInfo;
 }
 
-
 interface IUserInfo {
   cnp: string;
   birthDate: string;
+}
+
+
+export interface IAccountUpdateRequest {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
 }

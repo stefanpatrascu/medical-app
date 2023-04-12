@@ -1,12 +1,15 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { LoginService } from "../../api/login.service";
-import { GenericApiResponse } from "../../api/interfaces/generic.interface";
+import { LoginApiService } from "../../api/login/login-api.service";
+import { GenericApiResponse } from "../../interfaces/generic.interface";
 import { CustomToastService } from "../../shared/modules/toast/toast.service";
 import { HttpErrorResponse } from "@angular/common/http";
-import { AccountService } from "../../api/account.service";
-import { lastValueFrom } from "rxjs";
-import { IAccountResponse } from "../../api/interfaces/account.interface";
+import { AccountApiService } from "../../api/account/account-api.service";
+import { filter, lastValueFrom } from "rxjs";
+import { IAccountResponse } from "../../api/account/account.interface";
+import { Router } from "@angular/router";
+import { RouteEnum } from "../../enums/route.enum";
+import { markAsTouched } from "../../utils/form-touched.util";
 
 @Component({
   selector: 'app-login',
@@ -19,10 +22,13 @@ export class LoginComponent implements OnInit {
   form!: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
-              private loginService: LoginService,
-              private accountService: AccountService,
-              private toastService: CustomToastService) {
+              private loginService: LoginApiService,
+              private accountService: AccountApiService,
+              private toastService: CustomToastService,
+              private router: Router) {
   }
+
+
 
   ngOnInit(): void {
     this.generateReactiveForm();
@@ -30,18 +36,20 @@ export class LoginComponent implements OnInit {
 
   public onSubmit(): void {
     if (this.form.invalid) {
-      this.markAllAsDirty();
+      markAsTouched(this.form)
       this.toastService.warning("Warning", "Please fill all the fields");
       return;
     }
 
-
     this.loginService.authentificate(this.form.value)
       .subscribe({
-        next: async () => {
-          const account: IAccountResponse = await lastValueFrom(this.accountService.getMyAccount());
-          if (account) {
-            this.toastService.success("Success", "Welcome back, " + account.lastName + " " + account.firstName + "!");
+        next: (response: GenericApiResponse<IAccountResponse>) => {
+          if (response.data) {
+            this.toastService.success("Success",
+              "Welcome back, " + response.data?.lastName + " " + response.data?.firstName + "!");
+            this.router.navigate([RouteEnum.EDIT_ACCOUNT]);
+          } else {
+            this.toastService.error("Error", "An error occurred");
           }
         },
         error: (error: HttpErrorResponse) => {
@@ -52,17 +60,11 @@ export class LoginComponent implements OnInit {
           }
         }
       });
-
-  }
-
-  private markAllAsDirty(): void {
-    this.form.controls['email'].markAsDirty();
-    this.form.controls['password'].markAsDirty();
   }
 
   private generateReactiveForm(): void {
     this.form = this.formBuilder.group({
-      email: new FormControl<string | null>(null, Validators.required),
+      email: new FormControl<string | null>(null, [Validators.required, Validators.email]),
       password: new FormControl<string | null>(null, Validators.required)
     });
   }

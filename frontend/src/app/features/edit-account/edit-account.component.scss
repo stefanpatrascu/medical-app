@@ -1,0 +1,11 @@
+@import "card";
+@import "screens";
+@import "component";
+
+:host {
+  @include host();
+  @include white-card(0px, 20px);
+  @include mobile {
+    @include white-card(0px, 10px);
+  }
+}

@@ -7,21 +7,23 @@ import { ButtonModule } from "primeng/button";
 import { LogoModule } from "../../shared/modules/logo/logo.module";
 import { ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
+import {ValidationModule} from "../../shared/modules/validation/validation.module";
 
 
 @NgModule({
   declarations: [
     LoginComponent
   ],
-  imports: [
-    ReactiveFormsModule,
-    LoginRoutingModule,
-    CommonModule,
-    HttpClientModule,
-    InputTextModule,
-    ButtonModule,
-    LogoModule
-  ]
+    imports: [
+        ReactiveFormsModule,
+        LoginRoutingModule,
+        CommonModule,
+        HttpClientModule,
+        InputTextModule,
+        ButtonModule,
+        LogoModule,
+        ValidationModule
+    ]
 })
 export class LoginModule {
 }

@@ -6,7 +6,6 @@
         <div class="logo">
           <app-logo></app-logo>
         </div>
-
         <h1>Healthcare Platform Login</h1>
         <p>Access all the services and features available for healthcare professionals and patients by logging into our
           platform.</p>
@@ -22,8 +21,9 @@
                        class="w-full"
                        formControlName="email"
                        id="email"/>
-                <label htmlFor="username">Email</label>
+                <label htmlFor="email">Email</label>
               </div>
+              <app-validation [controlInput]="form.controls['email']"></app-validation>
             </div>
 
             <div class="mt-4">
@@ -39,6 +39,7 @@
                        id="password"/>
                 <label htmlFor="password">Password</label>
               </div>
+              <app-validation [controlInput]="form.controls['password']"></app-validation>
             </div>
             <div class="mt-4">
               <button pButton type="submit" icon="pi pi-sign-in" class="w-full text-center justify-content-center">Login
@@ -46,8 +47,6 @@
             </div>
           </form>
         </div>
-
-
       </div>
     </div>
   </div>

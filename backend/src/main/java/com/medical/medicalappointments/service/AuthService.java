@@ -2,8 +2,8 @@ package com.medical.medicalappointments.service;
 
 import com.medical.medicalappointments.model.dto.LoginRequestDTO;
 import com.medical.medicalappointments.model.dto.ResponseEntityDTO;
+import com.medical.medicalappointments.model.entity.User;
 import com.medical.medicalappointments.util.ResponseUtil;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,15 +21,19 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 @Service
 public class AuthService {
+    private final AuthenticationManager authenticationManager;
+    private final CsrfTokenRepository csrfTokenRepository;
+    private final AccountService accountService;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private CsrfTokenRepository csrfTokenRepository;
+    AuthService(AuthenticationManager authenticationManager, CsrfTokenRepository csrfTokenRepository, AccountService accountService) {
+        this.authenticationManager = authenticationManager;
+        this.csrfTokenRepository = csrfTokenRepository;
+        this.accountService = accountService;
+    }
 
     public ResponseEntity<ResponseEntityDTO> login(@Valid LoginRequestDTO loginRequest, HttpServletResponse response) {
         try {
@@ -44,7 +48,9 @@ public class AuthService {
 
             addXsrfCookieToResponse(response);
 
-            return ResponseUtil.success("Session started");
+            final User user = accountService.getCurrentUser(authentication.getName());
+
+            return ResponseUtil.success("Session started", user);
         } catch (AuthenticationException ex) {
             return ResponseUtil.error(HttpStatus.UNAUTHORIZED, "Wrong email or password");
         }

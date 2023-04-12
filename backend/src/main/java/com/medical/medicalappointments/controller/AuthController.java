@@ -2,11 +2,11 @@ package com.medical.medicalappointments.controller;
 import com.medical.medicalappointments.model.dto.LoginRequestDTO;
 import com.medical.medicalappointments.model.dto.ResponseEntityDTO;
 import com.medical.medicalappointments.service.AuthService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")

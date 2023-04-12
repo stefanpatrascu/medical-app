@@ -19,6 +19,9 @@ RUN chmod +x /usr/local/bin/wait-for-it.sh
 ARG PROFILE
 COPY --from=build /app/src/main/resources/application.${PROFILE}.yml /app/config/application.yml
 
+# Copy the avatars directory
+COPY --from=build /app/src/main/resources/static/images/avatars /app/src/main/resources/static/images/avatars
+
 # Copy the JAR file
 COPY --from=build /app/target/*.jar app.jar
 

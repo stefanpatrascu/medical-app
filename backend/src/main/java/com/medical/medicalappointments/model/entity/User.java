@@ -34,6 +34,9 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
+    @Column()
+    private String avatarFileName;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_info_id")
     @JsonManagedReference

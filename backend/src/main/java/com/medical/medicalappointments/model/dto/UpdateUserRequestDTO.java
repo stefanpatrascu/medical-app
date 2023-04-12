@@ -1,12 +1,16 @@
 package com.medical.medicalappointments.model.dto;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.hibernate.validator.constraints.Email;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Getter
@@ -14,23 +18,27 @@ import java.time.LocalDate;
 @Accessors(chain = true)
 public class UpdateUserRequestDTO {
 
-    @NotNull
+    @NotBlank(message = "First name is required")
+    @Size(min = 2, max = 50, message = "First name must be between 2 and 50 characters long")
     private String firstName;
 
-    @NotNull
+    @NotBlank(message = "Last name is required")
+    @Size(min = 2, max = 50, message = "Last name must be between 2 and 50 characters long")
     private String lastName;
 
-    @NotNull
-    @Email
+    @Email(message = "Email should be valid")
     private String email;
 
-    @NotNull
+    @NotBlank(message = "CNP is required")
+    @Pattern(regexp = "^[1-8]\\d{12}$", message = "CNP must be a valid 13-digit number")
     private String cnp;
 
-    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate birthDate;
+    private LocalDate birthDate = LocalDate.now();
 
-    @NotNull
+    @Size(min = 4, max = 64, message = "Password must be between 4 and 64 characters long")
     private String password;
+
+    @Size(min = 4, max = 64, message = "Password must be between 4 and 64 characters long")
+    private String confirmPassword;
 }

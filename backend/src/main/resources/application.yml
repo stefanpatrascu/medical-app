@@ -19,3 +19,6 @@ spring:
 
 cors:
   allowed-origins: http://localhost:4200
+
+upload:
+  path: src/main/resources/static/images/avatars
