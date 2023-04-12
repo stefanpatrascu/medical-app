@@ -33,10 +33,12 @@ public class UpdateUserRequestDTO {
     @Pattern(regexp = "^[1-8]\\d{12}$", message = "CNP must be a valid 13-digit number")
     private String cnp;
 
-    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate birthDate;
+    private LocalDate birthDate = LocalDate.now();
 
     @Size(min = 4, max = 64, message = "Password must be between 4 and 64 characters long")
     private String password;
+
+    @Size(min = 4, max = 64, message = "Password must be between 4 and 64 characters long")
+    private String confirmPassword;
 }

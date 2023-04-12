@@ -9,6 +9,7 @@ import { MessagesModule } from "primeng/messages";
 import { CalendarModule } from "primeng/calendar";
 import { MyAvatarComponent } from './components/my-avatar/my-avatar.component';
 import { EditAccountRoutingModule } from "./edit-account-routing.module";
+import { ValidationModule } from "../../shared/modules/validation/validation.module";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { EditAccountRoutingModule } from "./edit-account-routing.module";
     CheckboxModule,
     MessagesModule,
     CalendarModule,
-    EditAccountRoutingModule
+    EditAccountRoutingModule,
+    ValidationModule
   ],
   providers: [DatePipe],
   exports: [EditAccountComponent]

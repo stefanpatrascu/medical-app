@@ -61,6 +61,12 @@ public class AccountService {
 
     public ResponseEntity<ResponseEntityDTO> updateAccount(Authentication authentication, UpdateUserRequestDTO updatedUser) {
         final User currentUser = getCurrentUser(authentication.getName());
+
+        if (updatedUser.getPassword() != null && updatedUser.getConfirmPassword() != null &&
+            !updatedUser.getPassword().equals(updatedUser.getConfirmPassword())) {
+            return ResponseUtil.error(HttpStatus.BAD_REQUEST, "Passwords do not match");
+        }
+
         currentUser.setFirstName(updatedUser.getFirstName());
         currentUser.setLastName(updatedUser.getLastName());
         if (updatedUser.getEmail() != null) {

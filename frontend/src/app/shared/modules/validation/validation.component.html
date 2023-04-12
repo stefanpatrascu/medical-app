@@ -1,0 +1,17 @@
+<sub *ngIf="controlInput?.invalid && controlInput?.touched" class="validation-error">
+  <ng-container *ngIf="controlInput?.errors?.['required']">
+    This field is required
+  </ng-container>
+  <ng-container *ngIf="controlInput?.errors?.['minlength'] || controlInput?.errors?.['maxlength']">
+    Length must be between {{ controlInput?.errors?.['minlength']?.['requiredLength'] }} and {{ controlInput?.errors?.['maxlength']?.['requiredLength'] }} characters
+  </ng-container>
+  <ng-container *ngIf="controlInput?.errors?.['email']">
+    Please enter a valid email address
+  </ng-container>
+  <ng-container *ngIf="controlInput?.errors?.['pattern']">
+    {{patternMessage}}
+  </ng-container>
+  <ng-container *ngIf="controlInput?.errors?.['matching']">
+    {{matchingMessage}}
+  </ng-container>
+</sub>

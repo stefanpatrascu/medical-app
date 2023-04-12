@@ -21,6 +21,7 @@
                    id="firstName"/>
             <label htmlFor="email">First Name <span class="required">*</span></label>
           </div>
+          <app-validation [controlInput]="form.controls['firstName']"></app-validation>
         </div>
         <div class="col-12 md:col-6">
           <div class="p-float-label p-align-icon">
@@ -35,6 +36,7 @@
                    id="lastName"/>
             <label htmlFor="lastName">Last Name <span class="required">*</span></label>
           </div>
+          <app-validation [controlInput]="form.controls['lastName']"></app-validation>
         </div>
       </div>
       <div class="grid mt-2">
@@ -50,6 +52,7 @@
                    id="cnp"/>
             <label htmlFor="email">CNP <span class="required">*</span></label>
           </div>
+          <app-validation [controlInput]="form.controls['cnp']" patternMessage="The CNP must consist of 13 digits"></app-validation>
         </div>
         <div class="col-12 md:col-6">
           <div class="p-float-label p-align-icon">
@@ -60,6 +63,7 @@
                         appendTo="body" [readonlyInput]="true"></p-calendar>
             <label htmlFor="email">Date of birth <span class="required">*</span></label>
           </div>
+          <app-validation [controlInput]="form.controls['birthDate']"></app-validation>
         </div>
 
       </div>
@@ -69,21 +73,7 @@
   <div class="grid">
     <div class="col-12">
       <div class="grid mt-2">
-        <div class="col-12 md:col-6">
-          <div class="p-float-label p-align-icon">
-            <div class="p-input-icon-left">
-              <i class="pi pi-envelope"></i>
-            </div>
-            <input pInputText
-                   invalidField
-                   class="w-full"
-                   formControlName="currentEmail"
-                   readonly
-                   id="currentEmail"/>
-            <label htmlFor="currentEmail">Current Email <span class="required">*</span></label>
-          </div>
-        </div>
-        <div class="col-12 md:col-6">
+        <div class="col-12">
           <div class="p-float-label p-align-icon">
             <div class="p-input-icon-left">
               <i class="pi pi-envelope"></i>
@@ -93,12 +83,13 @@
                    class="w-full"
                    formControlName="email"
                    id="email"/>
-            <label htmlFor="email">New Email <span class="required">*</span></label>
+            <label htmlFor="email">New Email</label>
           </div>
+          <app-validation [controlInput]="form.controls['email']"></app-validation>
         </div>
       </div>
       <div class="grid mt-2">
-        <div class="col-12">
+        <div class="col-12 md:col-6">
           <div class="p-float-label p-align-icon">
             <div class="p-input-icon-left">
               <i class="pi pi-lock"></i>
@@ -109,8 +100,24 @@
                    type="password"
                    pInputText
                    id="password"/>
-            <label htmlFor="password">New Password <span class="required">*</span></label>
+            <label htmlFor="password">New Password</label>
           </div>
+          <app-validation [controlInput]="form.controls['password']"></app-validation>
+        </div>
+        <div class="col-12 md:col-6">
+          <div class="p-float-label p-align-icon">
+            <div class="p-input-icon-left">
+              <i class="pi pi-lock"></i>
+            </div>
+            <input class="w-full"
+                   invalidField
+                   formControlName="confirmPassword"
+                   type="password"
+                   pInputText
+                   id="confirmPassword"/>
+            <label htmlFor="password">Confirm New Password</label>
+          </div>
+          <app-validation matchingMessage="Passwords do not match" [controlInput]="form.controls['confirmPassword']"></app-validation>
         </div>
       </div>
     </div>

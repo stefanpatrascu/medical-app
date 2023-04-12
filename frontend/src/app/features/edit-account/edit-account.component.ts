@@ -1,10 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from "@angular/forms";
 import { AccountApiService } from "../../api/account/account-api.service";
 import { IAccountResponse, IAccountUpdateRequest } from "../../api/account/account.interface";
 import { Message } from "primeng/api";
 import { DatePipe } from "@angular/common";
 import { CustomToastService } from "../../shared/modules/toast/toast.service";
+import Validation from "../../utils/validation.util";
+
+export const passwordMatchingValidatior: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  const password = control.get('password');
+  const confirmPassword = control.get('confirmPassword');
+
+  return password?.value === confirmPassword?.value ? null : {notmatched: true};
+};
 
 @Component({
   selector: 'app-edit-account',
@@ -39,16 +55,44 @@ export class EditAccountComponent implements OnInit {
       });
   }
 
+  public getFormControl(name: string): FormControl {
+    return this.form.get(name) as FormControl;
+  }
+
   private generateReactiveForm(): void {
     this.form = this.formBuilder.group({
-      firstName: new FormControl<string | null>(null, [Validators.required]),
-      lastName: new FormControl<string | null>(null, [Validators.required]),
-      cnp: new FormControl<string | null>(null, [Validators.required]),
-      currentEmail: new FormControl<string | null>(null, [Validators.required, Validators.email]),
-      email: new FormControl<string | null>(null, [Validators.required, Validators.email]),
-      password: new FormControl<string | null>(null, [Validators.required]),
-      birthDate: new FormControl<Date | null>(null, [Validators.required]),
-    });
+        firstName: new FormControl<string | null>(null, [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(50),
+        ]),
+        lastName: new FormControl<string | null>(null, [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(50),
+        ]),
+        email: new FormControl<string | null>(null, [
+          Validators.email,
+        ]),
+        cnp: new FormControl<string | null>(null, [
+          Validators.required,
+          Validators.pattern('^[1-8]\\d{12}$'),
+        ]),
+        birthDate: new FormControl<Date | null>(null, Validators.required),
+        password: new FormControl<string | null>(null, [
+          Validators.minLength(4),
+          Validators.maxLength(64),
+        ]),
+        confirmPassword: new FormControl<string | null>(null,
+          [
+            Validators.minLength(4),
+            Validators.maxLength(64)
+          ]
+        ),
+      },
+      {
+        validators: [Validation.match('password', 'confirmPassword')]
+      });
     this.populateForm();
   }
 
@@ -66,4 +110,19 @@ export class EditAccountComponent implements OnInit {
         });
     }
   }
+
+  public passwordMatchValidator(control: AbstractControl): { passwordMismatch: boolean } {
+    // return (control: AbstractControl): { [key: string]: boolean } | null => {
+    //   const password = control.get('password');
+    //   const confirmPassword = control.get('confirmPassword');
+    //   console.log(password, confirmPassword)
+    //   if (!password || !confirmPassword) {
+    //     return null;
+    //   }
+    //
+    //   return password.value === confirmPassword.value ? null : {'passwordMismatch': true};
+    // };
+    return {'passwordMismatch': true}
+  }
+
 }
