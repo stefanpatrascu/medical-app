@@ -1,3 +1,5 @@
+@import "global-variables";
+
 sub {
-  color: #B00020;
+  color: $error-field-color;
 }

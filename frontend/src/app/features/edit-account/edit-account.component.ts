@@ -14,6 +14,7 @@ import { Message } from "primeng/api";
 import { DatePipe } from "@angular/common";
 import { CustomToastService } from "../../shared/modules/toast/toast.service";
 import Validation from "../../utils/validation.util";
+import { markAsTouched } from "../../utils/form-touched.util";
 
 export const passwordMatchingValidatior: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
   const password = control.get('password');
@@ -97,6 +98,7 @@ export class EditAccountComponent implements OnInit {
   }
 
   public onSubmit(): void {
+    markAsTouched(this.form);
     const accountUpdateRequest: IAccountUpdateRequest = {
       ...this.form.value,
       birthDate: this.datePipe.transform(this.form.value.birthDate, 'yyyy-MM-dd')
@@ -109,20 +111,6 @@ export class EditAccountComponent implements OnInit {
             "Account updated successfully!");
         });
     }
-  }
-
-  public passwordMatchValidator(control: AbstractControl): { passwordMismatch: boolean } {
-    // return (control: AbstractControl): { [key: string]: boolean } | null => {
-    //   const password = control.get('password');
-    //   const confirmPassword = control.get('confirmPassword');
-    //   console.log(password, confirmPassword)
-    //   if (!password || !confirmPassword) {
-    //     return null;
-    //   }
-    //
-    //   return password.value === confirmPassword.value ? null : {'passwordMismatch': true};
-    // };
-    return {'passwordMismatch': true}
   }
 
 }

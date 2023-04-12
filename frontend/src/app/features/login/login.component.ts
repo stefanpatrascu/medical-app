@@ -9,6 +9,7 @@ import { filter, lastValueFrom } from "rxjs";
 import { IAccountResponse } from "../../api/account/account.interface";
 import { Router } from "@angular/router";
 import { RouteEnum } from "../../enums/route.enum";
+import { markAsTouched } from "../../utils/form-touched.util";
 
 @Component({
   selector: 'app-login',
@@ -35,7 +36,7 @@ export class LoginComponent implements OnInit {
 
   public onSubmit(): void {
     if (this.form.invalid) {
-      this.markAllAsDirty();
+      markAsTouched(this.form)
       this.toastService.warning("Warning", "Please fill all the fields");
       return;
     }
@@ -61,14 +62,9 @@ export class LoginComponent implements OnInit {
       });
   }
 
-  private markAllAsDirty(): void {
-    this.form.controls['email'].markAsDirty();
-    this.form.controls['password'].markAsDirty();
-  }
-
   private generateReactiveForm(): void {
     this.form = this.formBuilder.group({
-      email: new FormControl<string | null>(null, Validators.required),
+      email: new FormControl<string | null>(null, [Validators.required, Validators.email]),
       password: new FormControl<string | null>(null, Validators.required)
     });
   }
