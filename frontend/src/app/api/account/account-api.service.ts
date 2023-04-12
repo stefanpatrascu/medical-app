@@ -27,17 +27,17 @@ export class AccountApiService {
     return this.myAccount$.asObservable();
   }
 
-  public updateAccount(request: IAccountUpdateRequest): Observable<GenericApiResponse> {
-    return this.http.put<GenericApiResponse>(this.path + AccountApiEnum.UPDATE_MY_ACCOUNT_PATH, request)
+  public updateAccount(request: IAccountUpdateRequest): Observable<GenericApiResponse<null>> {
+    return this.http.put<GenericApiResponse<null>>(this.path + AccountApiEnum.UPDATE_MY_ACCOUNT_PATH, request)
   }
 
-  public uploadAvatar(file: File): Observable<HttpEvent<GenericApiResponse>> {
+  public uploadAvatar(file: File): Observable<HttpEvent<GenericApiResponse<null>>> {
     const formData = new FormData();
     formData.append('file', file);
 
     const requestUrl = this.path + AccountApiEnum.UPLOAD_AVATAR_PATH;
 
-    return this.http.post<GenericApiResponse>(requestUrl, formData, {
+    return this.http.post<GenericApiResponse<null>>(requestUrl, formData, {
       reportProgress: true,
       observe: 'events',
     });

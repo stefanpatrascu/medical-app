@@ -4,7 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Email;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
+
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -31,7 +33,7 @@ public class UpdateUserRequestDTO {
     @Pattern(regexp = "^[1-8]\\d{12}$", message = "CNP must be a valid 13-digit number")
     private String cnp;
 
-    @NotBlank(message = "Birthdate is required")
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 

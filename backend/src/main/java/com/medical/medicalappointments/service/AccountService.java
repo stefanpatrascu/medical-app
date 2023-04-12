@@ -94,7 +94,7 @@ public class AccountService {
             SecurityContextHolder.getContext().setAuthentication(newAuthentication);
         }
 
-        return ResponseUtil.success("Account successfully updated");
+        return ResponseUtil.success("Account successfully updated", null);
     }
 
 
@@ -153,7 +153,7 @@ public class AccountService {
             currentUser.setAvatarFileName(newFileName);
             userRepository.save(currentUser);
 
-            return ResponseUtil.success("Avatar uploaded successfully: " + newFileName);
+            return ResponseUtil.success("Avatar uploaded successfully: " + newFileName, null);
         } catch (IOException e) {
             return ResponseUtil.error(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to upload avatar: " + e.getMessage());
         }

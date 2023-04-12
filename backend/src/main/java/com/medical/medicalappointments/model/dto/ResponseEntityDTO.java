@@ -15,14 +15,19 @@ public class ResponseEntityDTO {
     private String message;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Object data;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String error;
 
     private Date timestamp;
 
-    public ResponseEntityDTO(int status, String message, String error) {
+
+    public ResponseEntityDTO(int status, String message, String error, Object data) {
         this.status = status;
         this.error = error;
         this.message = message;
         this.timestamp = new Date();
+        this.data = data;
     }
 }

@@ -40,15 +40,14 @@ export class LoginComponent implements OnInit {
 
     this.loginService.authentificate(this.form.value)
       .subscribe({
-        next: async () => {
-          this.accountService.getMyAccount().subscribe((account: IAccountResponse | null ) => {
-            if (account) {
-              this.router.navigate([RouteEnum.EDIT_ACCOUNT]).then(() => {
-                this.toastService.success("Success",
-                  "Welcome back, " + account.lastName + " " + account.firstName + "!");
-              });
-            }
-          });
+        next: (response: GenericApiResponse<IAccountResponse>) => {
+          if (response.data) {
+            this.toastService.success("Success",
+              "Welcome back, " + response.data?.lastName + " " + response.data?.firstName + "!");
+            this.router.navigate([RouteEnum.EDIT_ACCOUNT]);
+          } else {
+            this.toastService.error("Error", "An error occurred");
+          }
         },
         error: (error: HttpErrorResponse) => {
           if (error.status === 401) {
@@ -58,7 +57,6 @@ export class LoginComponent implements OnInit {
           }
         }
       });
-
   }
 
   private markAllAsDirty(): void {

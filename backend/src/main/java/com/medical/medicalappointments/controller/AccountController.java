@@ -25,7 +25,7 @@ public class AccountController {
     @PostMapping("/logout")
     public ResponseEntity<ResponseEntityDTO> logout(HttpServletResponse response) {
         accountService.logout(response);
-        return ResponseUtil.success("Session successfully closed");
+        return ResponseUtil.success("Session successfully closed", null);
     }
 
 
