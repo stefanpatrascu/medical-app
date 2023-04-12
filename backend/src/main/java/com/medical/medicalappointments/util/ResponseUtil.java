@@ -1,4 +1,5 @@
 package com.medical.medicalappointments.util;
+
 import com.medical.medicalappointments.model.dto.ResponseEntityDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +15,12 @@ public class ResponseUtil {
     }
 
     public static ResponseEntity<ResponseEntityDTO> success(String message) {
-        ResponseEntityDTO errorResponse = new ResponseEntityDTO(HttpStatus.OK.value(), message);
+        ResponseEntityDTO errorResponse = new ResponseEntityDTO(HttpStatus.OK.value(), message, null);
         return new ResponseEntity<>(errorResponse, HttpStatus.OK);
     }
 
     public static ResponseEntity<ResponseEntityDTO> error(HttpStatus status, String message) {
-        ResponseEntityDTO errorResponse = new ResponseEntityDTO(status.value(), message);
+        ResponseEntityDTO errorResponse = new ResponseEntityDTO(status.value(), null, message);
         return new ResponseEntity<>(errorResponse, status);
     }
 

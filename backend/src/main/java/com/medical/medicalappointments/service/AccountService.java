@@ -61,12 +61,8 @@ public class AccountService {
 
     public ResponseEntity<ResponseEntityDTO> updateAccount(Authentication authentication, UpdateUserRequestDTO updatedUser) {
         final User currentUser = getCurrentUser(authentication.getName());
-        if (updatedUser.getFirstName() != null) {
-            currentUser.setFirstName(updatedUser.getFirstName());
-        }
-        if (updatedUser.getLastName() != null) {
-            currentUser.setLastName(updatedUser.getLastName());
-        }
+        currentUser.setFirstName(updatedUser.getFirstName());
+        currentUser.setLastName(updatedUser.getLastName());
         if (updatedUser.getEmail() != null) {
             currentUser.setEmail(updatedUser.getEmail());
         }
@@ -78,12 +74,8 @@ public class AccountService {
         if (updatedUserInfo == null) {
             updatedUserInfo = new UserInfo();
         }
-        if (updatedUser.getCnp() != null) {
-            updatedUserInfo.setCnp(updatedUser.getCnp());
-        }
-        if (updatedUser.getBirthDate() != null) {
-            updatedUserInfo.setBirthDate(updatedUser.getBirthDate());
-        }
+        updatedUserInfo.setCnp(updatedUser.getCnp());
+        updatedUserInfo.setBirthDate(updatedUser.getBirthDate());
         currentUser.setUserInfo(updatedUserInfo);
 
         userRepository.save(currentUser);
