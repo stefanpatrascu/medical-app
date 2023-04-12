@@ -10,7 +10,7 @@ import { ValidationComponent } from './validation.component';
     ValidationComponent
   ],
   imports: [
-    CommonModule,
+    CommonModule
   ],
   exports: [ValidationComponent]
 })

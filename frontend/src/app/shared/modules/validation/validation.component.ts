@@ -10,4 +10,5 @@ export class ValidationComponent {
   @Input() controlInput!: FormControl | AbstractControl | undefined;
   @Input() matchingMessage: string = 'Matching error';
   @Input() patternMessage: string = 'Invalid pattern';
+
 }
