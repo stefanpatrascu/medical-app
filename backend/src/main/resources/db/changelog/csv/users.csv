@@ -1,2 +1,4 @@
 first_name,last_name,password,email,role
 Default,User,$2a$10$bq2FgYCCnRabeEjLc/GzXuq8FdYYXXate9V/rtecONR5JKNp6ruHW,admin@admin.com,ADMIN
+Stefan,Patrascu,$2a$10$bq2FgYCCnRabeEjLc/GzXuq8FdYYXXate9V/rtecONR5JKNp6ruHW,stefanpatrascu96+patient@gmail.com,PATIENT
+Stefan,Patrascu,$2a$10$bq2FgYCCnRabeEjLc/GzXuq8FdYYXXate9V/rtecONR5JKNp6ruHW,stefanpatrascu96+medic@gmail.com,DOCTOR
