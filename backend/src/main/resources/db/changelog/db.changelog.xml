@@ -33,6 +33,7 @@
     <preConditions onFail="MARK_RAN">
       <tableExists tableName="users"/>
     </preConditions>
+    <sql>SET IDENTITY_INSERT users ON;</sql>
     <loadData
       encoding="UTF-8"
       file="classpath:db/changelog/csv/users.csv"
@@ -44,6 +45,7 @@
       <column name="email" type="STRING"/>
       <column name="role" type="STRING"/>
     </loadData>
+    <sql>SET IDENTITY_INSERT users OFF;</sql>
   </changeSet>
   <changeSet author="me" id="create-medical-specializations-table">
     <preConditions onFail="MARK_RAN">
