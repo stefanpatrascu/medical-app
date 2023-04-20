@@ -30,6 +30,9 @@
     </createTable>
   </changeSet>
   <changeSet id="insert_user" author="me">
+    <preConditions onFail="MARK_RAN">
+      <tableExists tableName="users"/>
+    </preConditions>
     <insert tableName="users">
       <column name="first_name" value="Default"/>
       <column name="last_name" value="User"/>
@@ -37,5 +40,33 @@
       <column name="email" value="admin@admin.com"/>
       <column name="role" value="ADMIN"/>
     </insert>
+  </changeSet>
+  <changeSet author="me" id="create-medical-specializations-table">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="medical_specializations"/>
+      </not>
+    </preConditions>
+    <createTable tableName="medical_specializations">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="label" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+
+  <changeSet author="me" id="populate-medical-specializations">
+    <preConditions onFail="MARK_RAN">
+      <tableExists tableName="medical_specializations"/>
+    </preConditions>
+    <loadData
+      encoding="UTF-8"
+      file="classpath:db/changelog/csv/medical_specializations.csv"
+      separator=","
+      tableName="medical_specializations">
+      <column name="label" type="STRING"/>
+    </loadData>
   </changeSet>
 </databaseChangeLog>
