@@ -42,6 +42,16 @@ public class User {
     @JsonManagedReference
     private UserInfo userInfo;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "patient_info_id")
+    @JsonManagedReference
+    private PatientInfo patientInfo;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "doctor_info_id")
+    @JsonManagedReference
+    private DoctorInfo doctorInfo;
+
     public void setId(Long id) {
         this.id = id;
     }
