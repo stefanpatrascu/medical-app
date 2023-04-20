@@ -2,38 +2,12 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
-  <changeSet id="create_users_table" author="me">
-    <preConditions onFail="MARK_RAN">
+  <changeSet id="insert_users" author="me">
+    <preConditions>
       <not>
-        <tableExists tableName="users"/>
+        <changeSetExecuted id="insert_users" author="me" />
       </not>
     </preConditions>
-    <createTable tableName="users">
-      <column name="id" type="bigint" autoIncrement="true">
-        <constraints primaryKey="true" nullable="false"/>
-      </column>
-      <column name="first_name" type="varchar(255)">
-        <constraints nullable="false"/>
-      </column>
-      <column name="last_name" type="varchar(255)">
-        <constraints nullable="false"/>
-      </column>
-      <column name="password" type="varchar(255)">
-        <constraints nullable="false"/>
-      </column>
-      <column name="email" type="varchar(255)">
-        <constraints nullable="false" unique="true"/>
-      </column>
-      <column name="role" type="varchar(255)">
-        <constraints nullable="false"/>
-      </column>
-    </createTable>
-  </changeSet>
-  <changeSet id="insert_users" author="me">
-    <preConditions onFail="MARK_RAN">
-      <tableExists tableName="users"/>
-    </preConditions>
-    <sql>SET IDENTITY_INSERT users ON;</sql>
     <loadData
       encoding="UTF-8"
       file="classpath:db/changelog/csv/users.csv"
@@ -45,27 +19,12 @@
       <column name="email" type="STRING"/>
       <column name="role" type="STRING"/>
     </loadData>
-    <sql>SET IDENTITY_INSERT users OFF;</sql>
   </changeSet>
-  <changeSet author="me" id="create-medical-specializations-table">
-    <preConditions onFail="MARK_RAN">
-      <not>
-        <tableExists tableName="medical_specializations"/>
-      </not>
-    </preConditions>
-    <createTable tableName="medical_specializations">
-      <column name="id" type="bigint" autoIncrement="true">
-        <constraints primaryKey="true" nullable="false"/>
-      </column>
-      <column name="label" type="VARCHAR(255)">
-        <constraints nullable="false"/>
-      </column>
-    </createTable>
-  </changeSet>
-
   <changeSet author="me" id="populate-medical-specializations">
-    <preConditions onFail="MARK_RAN">
-      <tableExists tableName="medical_specializations"/>
+    <preConditions>
+      <not>
+        <changeSetExecuted id="populate-medical-specializations" author="me" />
+      </not>
     </preConditions>
     <loadData
       encoding="UTF-8"

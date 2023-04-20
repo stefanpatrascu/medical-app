@@ -1,4 +1,4 @@
-id,first_name,last_name,password,email,role
-2,Default,User,$2a$10$bq2FgYCCnRabeEjLc/GzXuq8FdYYXXate9V/rtecONR5JKNp6ruHW,admin@admin.com,ADMIN
-3,Stefan,Patrascu,$2a$10$bq2FgYCCnRabeEjLc/GzXuq8FdYYXXate9V/rtecONR5JKNp6ruHW,stefanpatrascu96+patient@gmail.com,PATIENT
-4,Stefan,Patrascu,$2a$10$bq2FgYCCnRabeEjLc/GzXuq8FdYYXXate9V/rtecONR5JKNp6ruHW,stefanpatrascu96+medic@gmail.com,DOCTOR
+first_name,last_name,password,email,role
+Default,User,$2a$10$bq2FgYCCnRabeEjLc/GzXuq8FdYYXXate9V/rtecONR5JKNp6ruHW,admin@admin.com,ADMIN
+Stefan,Patrascu,$2a$10$bq2FgYCCnRabeEjLc/GzXuq8FdYYXXate9V/rtecONR5JKNp6ruHW,stefanpatrascu96+patient@gmail.com,PATIENT
+Stefan,Patrascu,$2a$10$bq2FgYCCnRabeEjLc/GzXuq8FdYYXXate9V/rtecONR5JKNp6ruHW,stefanpatrascu96+medic@gmail.com,DOCTOR
