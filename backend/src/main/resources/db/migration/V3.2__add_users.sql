@@ -1,9 +1,9 @@
 IF
 NOT EXISTS (SELECT 1 FROM users WHERE email = 'stefanpatrascu96+doctor@gmail.com')
 BEGIN
-INSERT INTO doctor_info (specialization_id, clinic_address)
+INSERT INTO doctor_info (clinic_address)
     OUTPUT INSERTED.id
-VALUES (1, '123 Heart Street');
+VALUES ('123 Heart Street');
 
 DECLARE
 @doctor_info_id BIGINT;

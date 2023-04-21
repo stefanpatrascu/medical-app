@@ -2,9 +2,7 @@ IF OBJECT_ID('dbo.doctor_info', 'U') IS NULL
 BEGIN
 CREATE TABLE doctor_info (
                              id BIGINT IDENTITY(1,1) PRIMARY KEY,
-                             specialization_id BIGINT,
-                             clinic_address NVARCHAR(255) NOT NULL,
-                             FOREIGN KEY (specialization_id) REFERENCES medical_specializations(id)
+                             clinic_address NVARCHAR(255) NOT NULL
 );
 END;
 

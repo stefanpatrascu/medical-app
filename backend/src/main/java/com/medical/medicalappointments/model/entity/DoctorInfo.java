@@ -16,10 +16,6 @@ public class DoctorInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "specialization_id", referencedColumnName = "id")
-    private MedicalSpecialization medicalSpecialization;
-
     @NotNull
     private String clinicAddress;
 
