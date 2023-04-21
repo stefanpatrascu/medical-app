@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
         next: (response: GenericApiResponse<IAccountResponse>) => {
           if (response.data) {
             this.toastService.success("Success",
-              "Welcome back, " + response.data?.lastName + " " + response.data?.firstName + "!");
+              "Welcome back, " + response.data?.userInfo?.lastName + " " + response.data?.userInfo.firstName + "!");
             this.router.navigate([RouteEnum.EDIT_ACCOUNT]);
           } else {
             this.toastService.error("Error", "An error occurred");

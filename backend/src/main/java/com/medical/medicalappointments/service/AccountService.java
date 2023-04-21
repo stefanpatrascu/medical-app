@@ -67,8 +67,6 @@ public class AccountService {
             return ResponseUtil.error(HttpStatus.BAD_REQUEST, "Passwords do not match");
         }
 
-        currentUser.setFirstName(updatedUser.getFirstName());
-        currentUser.setLastName(updatedUser.getLastName());
         if (updatedUser.getEmail() != null) {
             currentUser.setEmail(updatedUser.getEmail());
         }
@@ -80,6 +78,8 @@ public class AccountService {
         if (updatedUserInfo == null) {
             updatedUserInfo = new UserInfo();
         }
+        updatedUserInfo.setFirstName(updatedUser.getFirstName());
+        updatedUserInfo.setLastName(updatedUser.getLastName());
         updatedUserInfo.setCnp(updatedUser.getCnp());
         updatedUserInfo.setBirthDate(updatedUser.getBirthDate());
         currentUser.setUserInfo(updatedUserInfo);
@@ -112,7 +112,7 @@ public class AccountService {
         try {
             // Get the current user and the path to the old image
             User currentUser = getCurrentUser(authentication.getName());
-            Path oldImagePath = Paths.get(uploadPath + File.separator + currentUser.getAvatarFileName());
+            Path oldImagePath = Paths.get(uploadPath + File.separator + currentUser.getUserInfo().getAvatarFileName());
 
             // Generate a random UUID as the new file name
             String newFileName = UUID.randomUUID().toString() + "." + file.getOriginalFilename().split("\\.")[1];
@@ -156,7 +156,7 @@ public class AccountService {
             Files.deleteIfExists(oldImagePath);
 
             // Update the user's avatar file path
-            currentUser.setAvatarFileName(newFileName);
+            currentUser.getUserInfo().setAvatarFileName(newFileName);
             userRepository.save(currentUser);
 
             return ResponseUtil.success("Avatar uploaded successfully: " + newFileName, null);
@@ -167,7 +167,7 @@ public class AccountService {
 
     public byte[] getAvatar(Authentication authentication) {
         final User currentUser = getCurrentUser(authentication.getName());
-        Path path = Paths.get(uploadPath + File.separator + currentUser.getAvatarFileName());
+        Path path = Paths.get(uploadPath + File.separator + currentUser.getUserInfo().getAvatarFileName());
 
         try {
             return Files.readAllBytes(path);

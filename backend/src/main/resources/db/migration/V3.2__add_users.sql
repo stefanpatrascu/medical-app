@@ -11,8 +11,15 @@ IF NOT EXISTS (SELECT 1 FROM users WHERE email = 'stefanpatrascu96+doctor@gmail.
         DECLARE @doctor_info_id BIGINT;
         SET @doctor_info_id = SCOPE_IDENTITY();
 
-        INSERT INTO users (first_name, last_name, password, email, role, avatar_file_name, doctor_info_id, patient_info_id)
-        VALUES ('Stefan', 'Doctor', @password, 'stefanpatrascu96+doctor@gmail.com', 'DOCTOR', null, @doctor_info_id, null);
+        INSERT INTO users_info (first_name, last_name)
+        OUTPUT INSERTED.id
+        VALUES ('Stefan', 'Doctor');
+
+        DECLARE @doctor_user_info_id BIGINT;
+        SET @doctor_user_info_id = SCOPE_IDENTITY();
+
+        INSERT INTO users (password, email, role, user_info_id, doctor_info_id)
+        VALUES (@password, 'stefanpatrascu96+doctor@gmail.com', 'DOCTOR', @doctor_user_info_id, @doctor_info_id);
 
         INSERT INTO doctor_specialization (doctor_info_id, specialization_id)
         VALUES (@doctor_info_id, (SELECT TOP 1 MIN(id) FROM medical_specializations ));
@@ -24,20 +31,27 @@ IF NOT EXISTS (SELECT 1 FROM users WHERE email = 'stefanpatrascu96+doctor@gmail.
 -- Insert patient if not already in the users table
 IF NOT EXISTS (SELECT 1 FROM users WHERE email = 'stefanpatrascu96+patient@gmail.com')
     BEGIN
-        INSERT INTO patient_info (address, phone_number)
+        INSERT INTO users_info (first_name, last_name)
         OUTPUT INSERTED.id
-        VALUES ('456 Wellness Avenue', '555-123-4567');
+        VALUES ('Stefan', 'Patient');
 
-        DECLARE @patient_info_id BIGINT;
-        SET @patient_info_id = SCOPE_IDENTITY();
+        DECLARE @patient_user_info_id BIGINT;
+        SET @patient_user_info_id = SCOPE_IDENTITY();
 
-        INSERT INTO users (first_name, last_name, password, email, role, avatar_file_name, doctor_info_id, patient_info_id)
-        VALUES ('Stefan', 'Patient', @password, 'stefanpatrascu96+patient@gmail.com', 'PATIENT', null, null, @patient_info_id);
+        INSERT INTO users (password, email, role, user_info_id, doctor_info_id)
+        VALUES (@password, 'stefanpatrascu96+patient@gmail.com', 'PATIENT', @patient_user_info_id, null);
     END
 
 -- Insert admin if not already in the users table
 IF NOT EXISTS (SELECT 1 FROM users WHERE email = 'stefanpatrascu96+admin@gmail.com')
     BEGIN
-        INSERT INTO users (first_name, last_name, password, email, role, avatar_file_name, doctor_info_id, patient_info_id)
-        VALUES ('Stefan', 'Admin', @password, 'stefanpatrascu96+admin@gmail.com', 'ADMIN', null, null, null);
+        INSERT INTO users_info (first_name, last_name)
+        OUTPUT INSERTED.id
+        VALUES ('Stefan', 'Admin');
+
+        DECLARE @admin_user_info_id BIGINT;
+        SET @admin_user_info_id = SCOPE_IDENTITY();
+
+        INSERT INTO users (password, email, role, user_info_id, doctor_info_id)
+        VALUES (@password, 'stefanpatrascu96+admin@gmail.com', 'ADMIN', @admin_user_info_id, null);
     END

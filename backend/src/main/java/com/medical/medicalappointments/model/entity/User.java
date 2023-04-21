@@ -17,12 +17,6 @@ public class User {
     private Long id;
 
     @NotNull
-    private String firstName;
-
-    @NotNull
-    private String lastName;
-
-    @NotNull
     @JsonIgnore
     private String password;
 
@@ -34,18 +28,10 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
-    @Column()
-    private String avatarFileName;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_info_id", referencedColumnName = "id")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private UserInfo userInfo;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "patient_info_id", referencedColumnName = "id")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private PatientInfo patientInfo;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "doctor_info_id", referencedColumnName = "id")
