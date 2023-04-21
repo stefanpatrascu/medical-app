@@ -24,11 +24,6 @@ public class DoctorInfo {
     @JoinColumn(name = "schedule_id", referencedColumnName = "id")
     private DoctorSchedule doctorSchedule;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-        name = "doctor_specialization",
-        joinColumns = @JoinColumn(name = "doctor_info_id"),
-        inverseJoinColumns = @JoinColumn(name = "specialization_id")
-    )
-    private List<MedicalSpecialization> specializations;
+    @OneToMany(mappedBy = "doctorInfo", cascade = CascadeType.ALL)
+    private List<DoctorSpecialization> specializations;
 }

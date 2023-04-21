@@ -11,6 +11,13 @@ SET
 @doctor_info_id = SCOPE_IDENTITY();
 INSERT INTO users (first_name, last_name, password, email, role, avatar_file_name, doctor_info_id, patient_info_id)
 VALUES ('Stefan', 'Doctor', '$2a$10$bq2FgYCCnRabeEjLc/GzXuq8FdYYXXate9V/rtecONR5JKNp6ruHW', 'stefanpatrascu96+doctor@gmail.com', 'DOCTOR', null, @doctor_info_id, null);
+
+INSERT INTO doctor_specialization (doctor_info_id, specialization_id)
+VALUES (@doctor_info_id, (SELECT TOP 1 MIN(id) FROM medical_specializations ));
+
+INSERT INTO doctor_specialization (doctor_info_id, specialization_id)
+VALUES (@doctor_info_id, (SELECT TOP 1 MAX(id) FROM medical_specializations ));
+
 END
 
 IF
