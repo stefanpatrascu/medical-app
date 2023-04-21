@@ -17,9 +17,6 @@ spring:
     enabled: false
     validate-on-migrate: true
     out-of-order: true
-    user: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-    locations: classpath:db/migration
 
 cors:
   allowed-origins: http://localhost:4209
