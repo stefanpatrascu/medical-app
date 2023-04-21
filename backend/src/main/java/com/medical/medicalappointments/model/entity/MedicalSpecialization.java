@@ -17,4 +17,5 @@ public class MedicalSpecialization {
 
     private String label;
 
+
 }
