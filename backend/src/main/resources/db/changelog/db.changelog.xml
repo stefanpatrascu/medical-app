@@ -8,17 +8,7 @@
         <changeSetExecuted id="insert_users" author="me" />
       </not>
     </preConditions>
-    <loadData
-      encoding="UTF-8"
-      file="classpath:db/changelog/csv/users.csv"
-      separator=","
-      tableName="users">
-      <column name="first_name" type="STRING"/>
-      <column name="last_name" type="STRING"/>
-      <column name="password" type="STRING"/>
-      <column name="email" type="STRING"/>
-      <column name="role" type="STRING"/>
-    </loadData>
+    <sqlFile path="classpath:db/changelog/sql/insert_user_relations.sql" />
   </changeSet>
   <changeSet author="me" id="populate-medical-specializations">
     <preConditions>

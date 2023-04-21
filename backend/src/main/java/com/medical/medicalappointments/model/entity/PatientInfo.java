@@ -22,7 +22,7 @@ public class PatientInfo {
     @NotNull
     private String phoneNumber;
 
-    @OneToOne(mappedBy = "patientInfo")
-    @JsonBackReference
+    @OneToOne
+    @JoinColumn(name = "user_id")
     private User user;
 }
