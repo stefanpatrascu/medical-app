@@ -15,8 +15,7 @@ spring:
         dialect: org.hibernate.dialect.SQLServer2012Dialect
 
   flyway:
-    baselineOnMigrate: true
-    enabled: true
+    enabled: false
     validate-on-migrate: true
     out-of-order: true
     user: ${DB_USERNAME}

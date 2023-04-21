@@ -16,43 +16,43 @@ public class DoctorSchedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "monday_start", columnDefinition = "TIME DEFAULT 0")
+    @Column(name = "monday_start", columnDefinition = "TIME DEFAULT '00:00:00'")
     private LocalTime mondayStart;
 
-    @Column(name = "monday_end", columnDefinition = "TIME DEFAULT 0")
+    @Column(name = "monday_end", columnDefinition = "TIME DEFAULT '00:00:00'")
     private LocalTime mondayEnd;
 
-    @Column(name = "tuesday_start", columnDefinition = "TIME DEFAULT 0")
+    @Column(name = "tuesday_start", columnDefinition = "TIME DEFAULT '00:00:00'")
     private LocalTime tuesdayStart;
 
-    @Column(name = "tuesday_end", columnDefinition = "TIME DEFAULT 0")
+    @Column(name = "tuesday_end", columnDefinition = "TIME DEFAULT '00:00:00'")
     private LocalTime tuesdayEnd;
 
-    @Column(name = "wednesday_start", columnDefinition = "TIME DEFAULT 0")
+    @Column(name = "wednesday_start", columnDefinition = "TIME DEFAULT '00:00:00'")
     private LocalTime wednesdayStart;
 
-    @Column(name = "wednesday_end", columnDefinition = "TIME DEFAULT 0")
+    @Column(name = "wednesday_end", columnDefinition = "TIME DEFAULT '00:00:00'")
     private LocalTime wednesdayEnd;
 
-    @Column(name = "thursday_start", columnDefinition = "TIME DEFAULT 0")
+    @Column(name = "thursday_start", columnDefinition = "TIME DEFAULT '00:00:00'")
     private LocalTime thursdayStart;
 
-    @Column(name = "thursday_end", columnDefinition = "TIME DEFAULT 0")
+    @Column(name = "thursday_end", columnDefinition = "TIME DEFAULT '00:00:00'")
     private LocalTime thursdayEnd;
 
-    @Column(name = "friday_start", columnDefinition = "TIME DEFAULT 0")
+    @Column(name = "friday_start", columnDefinition = "TIME DEFAULT '00:00:00'")
     private LocalTime fridayStart;
 
-    @Column(name = "friday_end", columnDefinition = "TIME DEFAULT 0")
+    @Column(name = "friday_end", columnDefinition = "TIME DEFAULT '00:00:00'")
     private LocalTime fridayEnd;
 
-    @Column(name = "saturday_start", columnDefinition = "TIME DEFAULT 0")
+    @Column(name = "saturday_start", columnDefinition = "TIME DEFAULT '00:00:00'")
     private LocalTime saturdayStart;
 
-    @Column(name = "saturday_end", columnDefinition = "TIME DEFAULT 0")
+    @Column(name = "saturday_end", columnDefinition = "TIME DEFAULT '00:00:00'")
     private LocalTime saturdayEnd;
 
-    @Column(name = "sunday_start", columnDefinition = "TIME DEFAULT 0")
+    @Column(name = "sunday_start", columnDefinition = "TIME DEFAULT '00:00:00'")
     private LocalTime sundayStart;
 
     public void setId(Long id) {
