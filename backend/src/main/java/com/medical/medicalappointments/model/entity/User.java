@@ -1,6 +1,6 @@
 package com.medical.medicalappointments.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.medical.medicalappointments.model.enums.Role;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,18 +38,18 @@ public class User {
     private String avatarFileName;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_info_id")
-    @JsonManagedReference
+    @JoinColumn(name = "user_info_id", referencedColumnName = "id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private UserInfo userInfo;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "patient_info_id")
-    @JsonManagedReference
+    @JoinColumn(name = "patient_info_id", referencedColumnName = "id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private PatientInfo patientInfo;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "doctor_info_id")
-    @JsonManagedReference
+    @JoinColumn(name = "doctor_info_id", referencedColumnName = "id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private DoctorInfo doctorInfo;
 
     public void setId(Long id) {

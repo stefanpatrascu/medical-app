@@ -1,6 +1,4 @@
 package com.medical.medicalappointments.model.entity;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,8 +21,4 @@ public class UserInfo {
     private String cnp;
 
     private LocalDate birthDate;
-
-    @OneToOne(mappedBy = "userInfo")
-    @JsonBackReference
-    private User user;
 }

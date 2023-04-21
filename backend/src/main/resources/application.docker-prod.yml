@@ -14,12 +14,18 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.SQLServer2012Dialect
 
-  liquibase:
-    change-log: classpath:db/changelog/db.changelog.xml
-    enabled: false
+  flyway:
+    baselineOnMigrate: true
+    enabled: true
+    validate-on-migrate: true
+    out-of-order: true
+    user: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    locations: classpath:db/migration
 
 cors:
   allowed-origins: http://frontend:4209
+
 
 upload:
   path: src/main/resources/static/images/avatars

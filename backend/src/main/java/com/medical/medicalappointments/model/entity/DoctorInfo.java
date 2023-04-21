@@ -1,6 +1,4 @@
 package com.medical.medicalappointments.model.entity;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
@@ -16,13 +14,10 @@ public class DoctorInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    private String specialty;
+    @OneToOne
+    @JoinColumn(name = "specialization_id", referencedColumnName = "id")
+    private MedicalSpecialization medicalSpecialization;
 
     @NotNull
     private String clinicAddress;
-
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 }

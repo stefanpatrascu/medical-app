@@ -1,6 +1,4 @@
 package com.medical.medicalappointments.model.entity;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
@@ -21,8 +19,4 @@ public class PatientInfo {
 
     @NotNull
     private String phoneNumber;
-
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 }
