@@ -24,7 +24,7 @@ export class LoginGuard {
           } else if (account.role === RoleEnum.DOCTOR) {
             this.router.navigate(['/' + RouteEnum.DOCTOR_DASHBOARD_PATH]).then();
           } else if (account.role === RoleEnum.PATIENT) {
-            this.router.navigate(['/' + RouteEnum.PATIENT_DASHBOARD]).then();
+            this.router.navigate(['/' + RouteEnum.PATIENT_DASHBOARD_PATH]).then();
           }
           return false;
         } else {

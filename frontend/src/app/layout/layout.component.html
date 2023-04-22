@@ -1,0 +1,8 @@
+<div class="card" *ngIf="menuItems">
+  <p-menubar [model]="menuItems">
+    <ng-template pTemplate="start">
+      <app-logo></app-logo>
+    </ng-template>
+  </p-menubar>
+</div>
+<router-outlet></router-outlet>

@@ -29,6 +29,10 @@ export class AccountApiService {
     return this.myAccount$.asObservable();
   }
 
+  public logout(): Observable<GenericApiResponse<string>> {
+    return this.http.post<GenericApiResponse<string>>(this.path + AccountApiEnum.LOGOUT, null);
+  }
+
   public updateAccount(request: IAccountUpdateRequest): Observable<GenericApiResponse<null>> {
     return this.http.put<GenericApiResponse<null>>(this.path + AccountApiEnum.UPDATE_MY_ACCOUNT_PATH, request)
   }

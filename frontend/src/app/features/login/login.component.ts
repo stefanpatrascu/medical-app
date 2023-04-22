@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
             } else if (response.data.role === RoleEnum.DOCTOR) {
               this.router.navigate(['/' + RouteEnum.DOCTOR_DASHBOARD_PATH]).then();
             } else if (response.data.role === RoleEnum.PATIENT) {
-              this.router.navigate(['/' + RouteEnum.PATIENT_DASHBOARD]).then();
+              this.router.navigate(['/' + RouteEnum.PATIENT_DASHBOARD_PATH]).then();
             }
           } else {
             this.toastService.error("Error", "An error occurred");
