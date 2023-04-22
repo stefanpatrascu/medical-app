@@ -1,6 +1,8 @@
+import { RoleEnum } from "../../enums/role.enum";
+
 export interface IAccountResponse {
   email: string;
-  role: string; // TODO: need to be replaced with an Enum
+  role: RoleEnum;
   userInfo: IUserInfo;
 }
 
