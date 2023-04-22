@@ -11,6 +11,18 @@ const routes: Routes = [
   {
     path: RouteEnum.EDIT_ACCOUNT,
     loadChildren: () => import('./features/edit-account/edit-account.module').then(m => m.EditAccountModule)
+  },
+  {
+    path: RouteEnum.ADMIN_DASHBOARD_PATH,
+    loadChildren: () => import('./features/admin-dashboard/admin-dashboard.module').then(m => m.AdminDashboardModule)
+  },
+  {
+    path: RouteEnum.PATIENT_DASHBOARD,
+    loadChildren: () => import('./features/patient-dashboard/patient-dashboard.module').then(m => m.PatientDashboardModule)
+  },
+  {
+    path: RouteEnum.DOCTOR_DASHBOARD_PATH,
+    loadChildren: () => import('./features/doctor-dashboard/doctor-dashboard.module').then(m => m.DoctorDashboardModule)
   }
 ];
 
