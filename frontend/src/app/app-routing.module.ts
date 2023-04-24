@@ -7,6 +7,7 @@ import { RoleEnum } from "./enums/role.enum";
 import { LayoutComponent } from "./layout/layout.component";
 
 const routes: Routes = [
+  {path: '', redirectTo: 'login', pathMatch: 'full'},
   {
     path: RouteEnum.LOGIN_PATH,
     canActivate: [LoginGuard],
