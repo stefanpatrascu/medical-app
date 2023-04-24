@@ -3,7 +3,7 @@ package com.medical.medicalappointments.model.entity;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -22,8 +22,11 @@ public class Appointment {
     @JoinColumn(name = "patient_id", referencedColumnName = "id", nullable = false)
     private User patient;
 
-    @Column(nullable = false)
-    private LocalDateTime appointmentDateTime;
+    @Column(name = "start_date_time")
+    private Date startDateTime;
+
+    @Column(name = "end_date_time")
+    private Date endDateTime;
 
     @Column(length = 500)
     private String notes;
