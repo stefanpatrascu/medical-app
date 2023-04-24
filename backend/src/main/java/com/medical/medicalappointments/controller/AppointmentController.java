@@ -5,9 +5,7 @@ import com.medical.medicalappointments.service.AppointmentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -25,4 +23,10 @@ public class AppointmentController {
     public ResponseEntity<ResponseEntityDTO> addAppointment(@RequestBody @Valid AddAppointmentRequestDTO request, Authentication authentication) {
         return this.appointmentService.addAppointment(request, authentication);
     }
+
+    @GetMapping("/doctor/{id}/slots")
+    public ResponseEntity<ResponseEntityDTO> getAvailableSlots(@PathVariable Long id) {
+        return this.appointmentService.getAvailableSlots(id);
+    }
+
 }

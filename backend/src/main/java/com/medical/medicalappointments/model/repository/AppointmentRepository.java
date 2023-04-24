@@ -5,12 +5,10 @@ import com.medical.medicalappointments.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
-    List<Appointment> findByDoctorAndStartDateTimeBetweenOrEndDateTimeBetween(User doctor, Date startDateTime1, Date endDateTime1, Date startDateTime2, Date endDateTime2);
-
-
+    List<Appointment> findByDoctorAndStartDateTimeBetweenOrEndDateTimeBetween(User doctor, LocalDateTime startDateTime1, LocalDateTime endDateTime1, LocalDateTime startDateTime2, LocalDateTime endDateTime2);
+    List<Appointment> findByDoctor(User doctor);
 }
