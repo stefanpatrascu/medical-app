@@ -109,10 +109,31 @@ public class AppointmentService {
             }
 
             if (slotAvailable) {
-                availableSlots.add(startDateTime);
+                LocalDateTime nextSlotStartDateTime = slotEndDateTime.plusMinutes(10);
+                LocalDateTime nextSlotEndDateTime = nextSlotStartDateTime.plusMinutes(30);
+                boolean nextSlotAvailable = true;
+
+                for (Appointment appointment : existingAppointments) {
+                    LocalDateTime appointmentStartDateTime = appointment.getStartDateTime();
+                    LocalDateTime appointmentEndDateTime = appointment.getEndDateTime();
+
+                    if ((nextSlotStartDateTime.isEqual(appointmentStartDateTime) || nextSlotStartDateTime.isAfter(appointmentStartDateTime))
+                        && (nextSlotStartDateTime.isBefore(appointmentEndDateTime))) {
+                        nextSlotAvailable = false;
+                        break;
+                    } else if (appointmentStartDateTime.isBefore(nextSlotEndDateTime) && appointmentEndDateTime.isAfter(nextSlotStartDateTime)) {
+                        nextSlotAvailable = false;
+                        break;
+                    }
+
+                }
+
+                if (nextSlotAvailable) {
+                    availableSlots.add(startDateTime);
+                }
             }
 
-            startDateTime = slotEndDateTime;
+            startDateTime = slotEndDateTime.plusMinutes(10);
         }
 
         List<Map<String, String>> slots = new ArrayList<>();
@@ -125,4 +146,6 @@ public class AppointmentService {
 
         return ResponseUtil.success("Available slots", slots);
     }
+
+
 }
