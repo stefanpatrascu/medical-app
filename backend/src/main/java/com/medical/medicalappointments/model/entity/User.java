@@ -38,6 +38,9 @@ public class User {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private DoctorInfo doctorInfo;
 
+    @Column(nullable = false, columnDefinition = "BIT default 0")
+    private Boolean isActive;
+
     public void setId(Long id) {
         this.id = id;
     }
