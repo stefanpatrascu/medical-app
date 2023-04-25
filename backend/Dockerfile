@@ -1,4 +1,4 @@
-FROM maven:3.8.3-openjdk-17 AS build
+FROM openjdk:17-jdk AS build
 
 WORKDIR /app
 
@@ -6,7 +6,7 @@ WORKDIR /app
 COPY . .
 
 # Install netcat, which will be used to check the database status
-RUN apt-get update && apt-get install -y netcat-openbsd
+RUN apt-get update && apt-get install -y netcat
 
 # Define the build argument and use it to copy the correct config file
 ARG PROFILE
@@ -29,7 +29,7 @@ RUN wait-for-db () { \
 # Run the Maven build command only when the database is up
 RUN wait-for-db && mvn clean package
 
-FROM maven:3.8.3-openjdk-17 AS run
+FROM openjdk:17-jdk AS run
 
 WORKDIR /app
 
