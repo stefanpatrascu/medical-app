@@ -5,7 +5,7 @@ WORKDIR /app
 # Copy the entire content of the current directory into the /app directory in the container
 COPY . .
 
-RUN mvn clean package -DskipTests
+RUN mvn clean package
 
 FROM maven:3.8.3-openjdk-17 AS run
 
