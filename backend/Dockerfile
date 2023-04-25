@@ -6,7 +6,7 @@ WORKDIR /app
 COPY . .
 
 # Install netcat, which will be used to check the database status
-RUN apk add --no-cache netcat-openbsd
+RUN apt-get update && apt-get install -y netcat-openbsd
 
 # Define the build argument and use it to copy the correct config file
 ARG PROFILE
