@@ -1,6 +1,6 @@
 package com.medical.medicalappointments.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.medical.medicalappointments.model.enums.Role;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,12 +17,6 @@ public class User {
     private Long id;
 
     @NotNull
-    private String firstName;
-
-    @NotNull
-    private String lastName;
-
-    @NotNull
     @JsonIgnore
     private String password;
 
@@ -34,13 +28,18 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
-    @Column()
-    private String avatarFileName;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_info_id", referencedColumnName = "id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private UserInfo userInfo;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_info_id")
-    @JsonManagedReference
-    private UserInfo userInfo;
+    @JoinColumn(name = "doctor_info_id", referencedColumnName = "id")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private DoctorInfo doctorInfo;
+
+    @Column(nullable = false, columnDefinition = "BIT default 0")
+    private Boolean isActive;
 
     public void setId(Long id) {
         this.id = id;

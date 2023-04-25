@@ -1,17 +1,15 @@
 package com.medical.medicalappointments.model.entity;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @Table(name = "users_info")
 public class UserInfo {
 
@@ -20,11 +18,18 @@ public class UserInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
+    private String firstName;
+
+    @NotNull
+    private String lastName;
+
+    @Column()
     private String cnp;
 
+    @Column()
     private LocalDate birthDate;
 
-    @OneToOne(mappedBy = "userInfo")
-    @JsonBackReference
-    private User user;
+    @Column()
+    private String avatarFileName;
 }

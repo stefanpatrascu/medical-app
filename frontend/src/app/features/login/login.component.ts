@@ -10,6 +10,7 @@ import { IAccountResponse } from "../../api/account/account.interface";
 import { Router } from "@angular/router";
 import { RouteEnum } from "../../enums/route.enum";
 import { markAsTouched } from "../../utils/form-touched.util";
+import { RoleEnum } from "../../enums/role.enum";
 
 @Component({
   selector: 'app-login',
@@ -29,7 +30,6 @@ export class LoginComponent implements OnInit {
   }
 
 
-
   ngOnInit(): void {
     this.generateReactiveForm();
   }
@@ -46,8 +46,14 @@ export class LoginComponent implements OnInit {
         next: (response: GenericApiResponse<IAccountResponse>) => {
           if (response.data) {
             this.toastService.success("Success",
-              "Welcome back, " + response.data?.lastName + " " + response.data?.firstName + "!");
-            this.router.navigate([RouteEnum.EDIT_ACCOUNT]);
+              "Welcome back, " + response.data?.userInfo?.lastName + " " + response.data?.userInfo.firstName + "!");
+            if (response.data.role === RoleEnum.ADMIN) {
+              this.router.navigate(['/' + RouteEnum.ADMIN_DASHBOARD_PATH]).then();
+            } else if (response.data.role === RoleEnum.DOCTOR) {
+              this.router.navigate(['/' + RouteEnum.DOCTOR_DASHBOARD_PATH]).then();
+            } else if (response.data.role === RoleEnum.PATIENT) {
+              this.router.navigate(['/' + RouteEnum.PATIENT_DASHBOARD_PATH]).then();
+            }
           } else {
             this.toastService.error("Error", "An error occurred");
           }

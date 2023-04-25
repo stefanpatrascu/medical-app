@@ -14,11 +14,14 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.SQLServer2012Dialect
 
-  liquibase:
-    change-log: classpath:db/changelog/db.changelog.xml
+  flyway:
+    enabled: false
+    validate-on-migrate: true
+    out-of-order: true
 
 cors:
   allowed-origins: http://frontend:4209
+
 
 upload:
   path: src/main/resources/static/images/avatars

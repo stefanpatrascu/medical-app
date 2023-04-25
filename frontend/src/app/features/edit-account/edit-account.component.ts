@@ -48,8 +48,8 @@ export class EditAccountComponent implements OnInit {
   private populateForm(): void {
     this.accountService.getMyAccount(true)
       .subscribe((account: IAccountResponse | null) => {
-        this.form.get("firstName")?.setValue(account?.firstName);
-        this.form.get("lastName")?.setValue(account?.lastName);
+        this.form.get("firstName")?.setValue(account?.userInfo?.firstName);
+        this.form.get("lastName")?.setValue(account?.userInfo.lastName);
         this.form.get("currentEmail")?.setValue(account?.email);
         this.form.get("cnp")?.setValue(account?.userInfo?.cnp);
         this.form.get("birthDate")?.setValue(account?.userInfo?.birthDate ? new Date(account?.userInfo?.birthDate) : null)

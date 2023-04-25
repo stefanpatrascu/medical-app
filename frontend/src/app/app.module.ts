@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CustomToastModule } from "./shared/modules/toast/toast.module";
 import { XsrfTokenInterceptor } from "./interceptors/xsrf-token.interceptor";
 import { RefreshSessionInterceptor } from "./interceptors/refresh-session.interceptor";
+import { LayoutModule } from "./layout/layout.module";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { RefreshSessionInterceptor } from "./interceptors/refresh-session.interc
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    CustomToastModule
+    CustomToastModule,
+    LayoutModule
   ],
   providers: [
     {

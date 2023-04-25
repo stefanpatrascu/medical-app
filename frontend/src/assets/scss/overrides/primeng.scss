@@ -42,3 +42,8 @@
 .p-inputtext.ng-touched.ng-invalid {
   border-color: $error-field-color;
 }
+
+.p-menubar {
+  font-family: $default-font-family;
+  font-size: $default-font-size;
+}

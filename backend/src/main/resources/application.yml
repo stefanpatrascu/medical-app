@@ -7,6 +7,7 @@ spring:
     password: MyStrongP@ssw0rd
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
   jpa:
+    database: SQL_SERVER
     show-sql: true
     hibernate:
       ddl-auto: update
@@ -14,8 +15,10 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.SQLServer2012Dialect
 
-  liquibase:
-    change-log: classpath:db/changelog/db.changelog.xml
+  flyway:
+    enabled: false
+    validate-on-migrate: true
+    out-of-order: true
 
 cors:
   allowed-origins: http://localhost:4200

@@ -20,11 +20,17 @@ export class AccountApiService {
 
   public getMyAccount(forceUpdate: boolean = false): Observable<IAccountResponse | null> {
     if (this.myAccount$.getValue() === null || forceUpdate) {
-      lastValueFrom(this.http.get<IAccountResponse>(this.path + AccountApiEnum.MY_ACCOUNT_PATH))
-        .then((res: IAccountResponse) => this.myAccount$.next(res));
+      return this.http.get<IAccountResponse>(this.path + AccountApiEnum.MY_ACCOUNT_PATH).pipe((map((res: IAccountResponse) => {
+        this.myAccount$.next(res);
+        return res;
+      })));
     }
 
     return this.myAccount$.asObservable();
+  }
+
+  public logout(): Observable<GenericApiResponse<string>> {
+    return this.http.post<GenericApiResponse<string>>(this.path + AccountApiEnum.LOGOUT, null);
   }
 
   public updateAccount(request: IAccountUpdateRequest): Observable<GenericApiResponse<null>> {
@@ -47,9 +53,9 @@ export class AccountApiService {
     return this.http.get(this.path + AccountApiEnum.MY_AVATAR_PATH, {responseType: 'blob'})
       .pipe(
         map((blob: Blob) => {
-          return this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
-        }
-      ));
+            return this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
+          }
+        ));
   }
 
 }
