@@ -5,7 +5,29 @@ WORKDIR /app
 # Copy the entire content of the current directory into the /app directory in the container
 COPY . .
 
-RUN mvn clean package
+# Install netcat, which will be used to check the database status
+RUN apt-get update && apt-get install -y netcat
+
+# Define the build argument and use it to copy the correct config file
+ARG PROFILE
+COPY src/main/resources/application.${PROFILE}.yml /app/config/application.yml
+
+# Copy the avatars directory
+COPY src/main/resources/static/images/avatars /app/src/main/resources/static/images/avatars
+
+# Copy the Maven settings file
+COPY settings.xml /root/.m2/settings.xml
+
+# Define a function that checks the database status
+RUN wait-for-db () { \
+    until nc -z db 1433; do \
+        echo "Waiting for database to start..." ;\
+        sleep 1 ;\
+    done ;\
+}
+
+# Run the Maven build command only when the database is up
+RUN wait-for-db && mvn clean package
 
 FROM maven:3.8.3-openjdk-17 AS run
 
@@ -17,7 +39,7 @@ RUN chmod +x /usr/local/bin/wait-for-it.sh
 
 # Define the build argument and use it to copy the correct config file
 ARG PROFILE
-COPY --from=build /app/src/main/resources/application.${PROFILE}.yml /app/config/application.yml
+COPY --from=build /app/config/application.yml /app/config/application.yml
 
 # Copy the avatars directory
 COPY --from=build /app/src/main/resources/static/images/avatars /app/src/main/resources/static/images/avatars
