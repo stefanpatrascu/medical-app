@@ -32,11 +32,21 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      - name: Create Docker Images
-        run: docker-compose up -d --force-recreate
+      - name: Create Database Image
+        run: docker-compose up -d --force-recreate db
         env:
           DB_USERNAME: ${{ env.DB_USERNAME }}
           DB_PASSWORD: ${{ env.DB_PASSWORD }}
-          JWT_SECRET: ${{ env.JWT_SECRET }}
-          APP_ADMIN_EMAIL: ${{ env.APP_ADMIN_EMAIL }}
-          APP_ADMIN_PASSWORD: ${{ env.APP_ADMIN_PASSWORD }}
+
+
+      - name: Create Backend Image
+        run: docker-compose up -d --force-recreate backend
+        env:
+          DB_USERNAME: ${{ env.DB_USERNAME }}
+          DB_PASSWORD: ${{ env.DB_PASSWORD }}
+
+      - name: Create Frontend Image
+        run: docker-compose up -d --force-recreate frontend
+        env:
+          DB_USERNAME: ${{ env.DB_USERNAME }}
+          DB_PASSWORD: ${{ env.DB_PASSWORD }}
